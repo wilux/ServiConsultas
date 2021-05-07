@@ -19,7 +19,7 @@ export default function MiTiendaStack() {
         component={MiTienda}
         name="mitienda"
         options={{
-          title: "Mis electricista",
+          title: "Mis Servicios",
         }}
       />
       <Stack.Screen

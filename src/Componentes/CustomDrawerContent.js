@@ -35,13 +35,13 @@ export default function CustomDrawerContent(props) {
             <DrawerItem
               icon={({ color, size }) => (
                 <Icon
-                  name="cart-outline"
+                  name="expand-all"
                   color={color}
                   size={size}
                   type="material-community"
                 />
               )}
-              label="Tienda"
+              label="Servicios"
               onPress={() => {
                 props.navigation.navigate("tienda");
               }}
@@ -49,13 +49,13 @@ export default function CustomDrawerContent(props) {
             <DrawerItem
               icon={({ color, size }) => (
                 <Icon
-                  name="store"
+                  name="home-city"
                   color={color}
                   size={size}
                   type="material-community"
                 />
               )}
-              label="Mis electricista"
+              label="Mis Servicios"
               onPress={() => {
                 props.navigation.navigate("mitienda");
               }}
@@ -63,7 +63,7 @@ export default function CustomDrawerContent(props) {
             <DrawerItem
               icon={({ color, size }) => (
                 <Icon
-                  name="electric-switch-outline"
+                  name="account"
                   color={color}
                   size={size}
                   type="material-community"

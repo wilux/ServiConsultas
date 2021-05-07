@@ -189,7 +189,7 @@ export default function EditarProducto(props) {
       <Text style={styles.txtlabel}>Asignar Categoria</Text>
       <Botonera categoria={categoria} setcategoria={setcategoria} />
       <Button
-        title="Editar Producto"
+        title="Editar Servicio"
         buttonStyle={styles.btnaddnew}
         ref={btnref}
         onPress={editProducto}
@@ -274,7 +274,7 @@ function Botonera(props) {
           color={categoria === "carpinteria" ? "#1b94ce" : "#757575"}
           reverse
         />
-        <Text>carpinteria</Text>
+        <Text>Carpintería</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btncategoria}
@@ -289,12 +289,12 @@ function Botonera(props) {
           color={categoria === "herreria" ? "#1b94ce" : "#757575"}
           reverse
         />
-        <Text>herreria</Text>
+        <Text>Herrería</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btncategoria}
         onPress={() => {
-          setcategoria("plomeria");
+          setcategoria("herreria");
         }}
       >
         <Icon
@@ -304,12 +304,12 @@ function Botonera(props) {
           color={categoria === "plomeria" ? "#1b94ce" : "#757575"}
           reverse
         />
-        <Text>Artículos</Text>
+        <Text>Fontanería</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btncategoria}
         onPress={() => {
-          setcategoria("electricista");
+          setcategoria("plomeria");
         }}
       >
         <Icon
@@ -319,7 +319,7 @@ function Botonera(props) {
           color={categoria === "electricista" ? "#1b94ce" : "#757575"}
           reverse
         />
-        <Text>electricista</Text>
+        <Text>Electricistas</Text>
       </TouchableOpacity>
     </View>
   );

@@ -13,14 +13,14 @@ export default function ShopButton() {
         navigation.navigate("mitienda");
       }}
     >
-      <Icon name="my-location" color="#fff" size={30} />
+      <Icon name="publish" color="#fff" size={30} />
     </TouchableHighlight>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#25D366",
+    backgroundColor: "#d38225",
     alignItems: "center",
     justifyContent: "center",
     width: 72,

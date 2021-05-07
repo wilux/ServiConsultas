@@ -36,8 +36,8 @@ const TabBar = () => {
     >
       <Tab.Screen
         component={TiendaStack}
-        name="tienda"
-        optiones={{ title: "electricista" }}
+        name="Servicios"
+        optiones={{ title: "Servicios" }}
       />
       <Tab.Screen
         component={MiTienda}
@@ -46,7 +46,7 @@ const TabBar = () => {
       />
       <Tab.Screen
         component={PerfilStack}
-        name="cuenta"
+        name="Cuenta"
         options={{ title: "Cuenta" }}
       />
     </Tab.Navigator>
@@ -57,16 +57,16 @@ function mostrarIcono(route, color) {
   let iconName = "";
 
   switch (route.name) {
-    case "tienda":
-      iconName = "cart-outline";
+    case "Servicios":
+      iconName = "expand-all";
       break;
 
-    case "cuenta":
-      iconName = "electric-switch";
+    case "Cuenta":
+      iconName = "shield-account";
       break;
 
     case "mitienda":
-      iconName = "cart-outline";
+      iconName = "home-flood";
       break;
   }
 
@@ -82,7 +82,7 @@ export default function RutasAutenticadas() {
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen
-          name="Tienda"
+          name="tienda"
           component={TabBar}
           options={{
             title: "Tienda",
