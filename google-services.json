@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "674906515413",
+    "firebase_url": "https://whatscommerce-10f93.firebaseio.com",
+    "project_id": "whatscommerce-10f93",
+    "storage_bucket": "whatscommerce-10f93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674906515413:android:9326c92d9cb66a96df7f5c",
+        "android_client_info": {
+          "package_name": "com.lvclick.whatscommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674906515413-f6u2q5kp4ltbm7jfu9oejfuva27jsg9u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lvclick.whatscommerce",
+            "certificate_hash": "78c0b4d53c384c91c6aac2fe3e0a44425fbf379a"
+          }
+        },
+        {
+          "client_id": "674906515413-kvainklprs4jiatdji3jlineusmuppsl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_-rUM1oXRI6JNSCZW2WQUeHn8EEoibk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674906515413-kvainklprs4jiatdji3jlineusmuppsl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "674906515413-16sjf4kdsce4bj2jldlc476uj3qpun33.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lvclick.whatscommerce"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

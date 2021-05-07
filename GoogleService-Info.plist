@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>674906515413-16sjf4kdsce4bj2jldlc476uj3qpun33.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.674906515413-16sjf4kdsce4bj2jldlc476uj3qpun33</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>674906515413-f6u2q5kp4ltbm7jfu9oejfuva27jsg9u.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDBHKa15Ha6g2zsYpGGWJmDxOH9hI-dAaM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>674906515413</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.lvclick.whatscommerce</string>
+	<key>PROJECT_ID</key>
+	<string>whatscommerce-10f93</string>
+	<key>STORAGE_BUCKET</key>
+	<string>whatscommerce-10f93.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:674906515413:ios:4213498f5bacfa08df7f5c</string>
+	<key>DATABASE_URL</key>
+	<string>https://whatscommerce-10f93.firebaseio.com</string>
+</dict>
+</plist>

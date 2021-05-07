@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "name": "whatscommerce",
+    "slug": "whatscommerce",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lvclick.whatscommerce",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.674906515413-16sjf4kdsce4bj2jldlc476uj3qpun33"
+        }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+
+    "android": {
+      "permissions": [
+        "CAMERA_ROLL",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "NOTIFICACION",
+        "USER_FACING_NOTIFICATIONS"
+      ],
+      "useNextNotificationsApi": true,
+      "package": "com.lvclick.whatscommerce",
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyAYqG-yz0kpD_9yH3BHJBLUvSw_DQi43SM",
+        "authDomain": "whatscommerce-10f93.firebaseapp.com",
+        "databaseURL": "https://whatscommerce-10f93.firebaseio.com",
+        "projectId": "whatscommerce-10f93",
+        "storageBucket": "whatscommerce-10f93.appspot.com",
+        "messagingSenderId": "674906515413",
+        "appId": "1:674906515413:web:724a529acdaf6ee1df7f5c"
+      }
+    }
+  }
+}
