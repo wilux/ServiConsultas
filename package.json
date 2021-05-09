@@ -8,12 +8,15 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@date-io/date-fns": "^2.10.8",
+    "@material-ui/pickers": "^3.3.10",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "~5.2.6",
     "@react-navigation/drawer": "^5.9.0",
     "@react-navigation/native": "~5.1.5",
     "@react-navigation/stack": "~5.2.10",
     "base-64": "^0.1.0",
+    "date-fns": "^2.21.2",
     "expo": "^39.0.0",
     "expo-facebook": "~9.0.0",
     "expo-firebase-recaptcha": "^1.2.0",
@@ -24,13 +27,16 @@
     "expo-status-bar": "~1.0.2",
     "firebase": "7.9.0",
     "firesql": "^2.0.2",
+    "fontsource-roboto": "^4.0.0",
     "lodash": "^4.17.20",
+    "material-ui": "^0.20.2",
     "moment": "^2.29.0",
     "random-uuid-v4": "^0.0.9",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.0.tar.gz",
     "react-native-animated-spinkit": "^1.4.1",
+    "react-native-calendars": "^1.1260.0",
     "react-native-code-input": "^1.0.6",
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-easy-toast": "^1.2.0",
@@ -42,7 +48,9 @@
     "react-native-screens": "~2.10.1",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-web": "~0.13.7",
-    "react-native-webview": "^11.4.3"
+    "react-native-webview": "^11.4.3",
+    "react-schedule-selector": "^3.0.0",
+    "styled-components": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

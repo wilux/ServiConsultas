@@ -1,20 +1,30 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add moment
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @material-ui
 
 PATH: 
-  C:\Program Files (x86)\IntelSWTools\system_studio_2020\OpenCL\sdk\bin\x64;C:\Program Files (x86)\IntelSWTools\system_studio_2020\OpenCL\sdk\bin\x86;C:\Program Files (x86)\IntelSWTools\system_studio_2020\OpenCL\sdk\bin\Pin;C:\Program Files (x86)\IntelSWTools\system_studio_2020\OpenCL\sdk\bin\GTPin;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_152\bin;C:\Program Files\Java\jdk1.8.0_152;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;c:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;c:\Program Files\Microsoft SQL Server\110\Tools\Binn\;c:\Program Files\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;c:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;c:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\dotnet\;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft VS Code\bin;C:\Users\usuario\AppData\Local\Android\Sdk\emulator;C:\Program Files (x86)\AOMEI Backupper;C:\Program Files\Git\cmd;C:\Program Files (x86)\WinMerge;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\PuTTY\;C:\Users\usuario\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\usuario\AppData\Local\GitHubDesktop\bin;C:\Users\usuario\AppData\Local\Microsoft\WindowsApps;C:\Users\usuario\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\usuario\AppData\Local\Yarn\bin;C:\Users\usuario\AppData\Roaming\npm
+  C:\Program Files\AdoptOpenJDK\jdk-11.0.10.9-hotspot\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Java\jdk-11.0.5;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\nodejs\;C:\php;C:\Program Files (x86)\GnuWin32\bin;C:\apache-maven-3.6.3\bin;C:\Program Files (x86)\Common Files\Acronis\SnapAPI\;C:\Program Files\Java\jdk-13.0.2\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\PowerShell\7-preview\preview;C:\platform-tools;C:\Users\nesto\AppData\Local\emulator;C:\Users\nesto\AppData\Roaming\npm;C:\Program Files (x86)\WinMerge;C:\Program Files\Azure Data Studio\bin;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Go\bin;C:\Program Files (x86)\dotnet\;C:\Users\nesto\AppData\Local\Microsoft\WindowsApps;C:\Users\nesto\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\nesto\AppData\Local\Yarn\bin;C:\src\flutter\bin;C:\Program Files (x86)\GitHub CLI\;C:\Users\nesto\.dotnet\tools;C:\Program Files\qemu;C:\Users\nesto\Documents\PowerShell\Scripts;C:\Users\nesto\go\bin;C:\Users\nesto\AppData\Local\atom\bin;C:\Users\nesto\AppData\Local\Programs\Fiddler
 
 Yarn version: 
-  1.22.4
+  1.22.5
 
 Node version: 
-  12.18.3
+  12.16.1
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\usuario\Documents\ReactProjects\whatscommerce\node_modules\@babel\compat-data\node_modules\.bin'
+  Error: https://registry.yarnpkg.com/@material-ui: Request "https://registry.yarnpkg.com/@material-ui" returned a 405
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66106:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140749:22)
+      at Request.emit (events.js:311:20)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141721:10)
+      at Request.emit (events.js:311:20)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141643:12)
+      at Object.onceWrapper (events.js:417:28)
+      at IncomingMessage.emit (events.js:323:22)
+      at endReadableNT (_stream_readable.js:1204:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
 
 npm manifest: 
   {
@@ -27,20 +37,28 @@ npm manifest:
       "eject": "expo eject"
     },
     "dependencies": {
+      "@date-io/date-fns": "^2.10.8",
+      "@material-ui/pickers": "^3.3.10",
       "@react-native-community/masked-view": "0.1.10",
       "@react-navigation/bottom-tabs": "~5.2.6",
       "@react-navigation/drawer": "^5.9.0",
       "@react-navigation/native": "~5.1.5",
       "@react-navigation/stack": "~5.2.10",
       "base-64": "^0.1.0",
+      "date-fns": "^2.21.2",
       "expo": "^39.0.0",
+      "expo-facebook": "~9.0.0",
       "expo-firebase-recaptcha": "^1.2.0",
+      "expo-google-app-auth": "^8.1.3",
+      "expo-google-sign-in": "~8.3.0",
       "expo-image-picker": "~9.1.0",
       "expo-notifications": "~0.7.2",
       "expo-status-bar": "~1.0.2",
       "firebase": "7.9.0",
       "firesql": "^2.0.2",
+      "fontsource-roboto": "^4.0.0",
       "lodash": "^4.17.20",
+      "moment": "^2.29.0",
       "random-uuid-v4": "^0.0.9",
       "react": "16.13.1",
       "react-dom": "16.13.1",
@@ -57,7 +75,7 @@ npm manifest:
       "react-native-screens": "~2.10.1",
       "react-native-snap-carousel": "^3.9.1",
       "react-native-web": "~0.13.7",
-      "react-native-webview": "10.7.0"
+      "react-native-webview": "^11.4.3"
     },
     "devDependencies": {
       "@babel/core": "^7.8.6",
@@ -1021,6 +1039,13 @@ Lockfile:
     dependencies:
       regenerator-runtime "^0.13.4"
   
+  "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.0", "@babel/runtime@^7.8.7":
+    version "7.14.0"
+    resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.0.tgz#46794bc20b612c5f75e62dd071e24dfd95f1cbe6"
+    integrity sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==
+    dependencies:
+      regenerator-runtime "^0.13.4"
+  
   "@babel/template@^7.0.0", "@babel/template@^7.10.4":
     version "7.10.4"
     resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.10.4.tgz#3251996c4200ebc71d1a8fc405fba940f36ba278"
@@ -1070,6 +1095,23 @@ Lockfile:
     dependencies:
       exec-sh "^0.3.2"
       minimist "^1.2.0"
+  
+  "@date-io/core@1.x":
+    version "1.3.13"
+    resolved "https://registry.yarnpkg.com/@date-io/core/-/core-1.3.13.tgz#90c71da493f20204b7a972929cc5c482d078b3fa"
+    integrity sha512-AlEKV7TxjeK+jxWVKcCFrfYAk8spX9aCyiToFIiLPtfQbsjmRGLIhb5VZgptQcJdHtLXo7+m0DuurwFgUToQuA==
+  
+  "@date-io/core@^2.10.7":
+    version "2.10.7"
+    resolved "https://registry.yarnpkg.com/@date-io/core/-/core-2.10.7.tgz#0fe1fa0ef02c827919e23c2802a4b25589ac522d"
+    integrity sha512-EG/1qDiQvd12RoNJ6H+sZcHVswC/3uMx/ySvfaJ24vB30rLjkgHggEXbgMbfgki7wMuiQ/zXI8QlmF1k3kWRGQ==
+  
+  "@date-io/date-fns@^2.10.8":
+    version "2.10.8"
+    resolved "https://registry.yarnpkg.com/@date-io/date-fns/-/date-fns-2.10.8.tgz#08ab5ed26c6c88095474f9ddd948d65d8a023eb4"
+    integrity sha512-T5RXKOt8CnjsKg0Orgbe/ekoafC02nsopS+wve5+6gF11hPfN2QUqXclxYQv1LIZSaAHJJ2gL8y0msOew74QHQ==
+    dependencies:
+      "@date-io/core" "^2.10.7"
   
   "@egjs/hammerjs@^2.0.17":
     version "2.0.17"
@@ -1430,6 +1472,18 @@ Lockfile:
       "@types/yargs" "^15.0.0"
       chalk "^3.0.0"
   
+  "@material-ui/pickers@^3.3.10":
+    version "3.3.10"
+    resolved "https://registry.yarnpkg.com/@material-ui/pickers/-/pickers-3.3.10.tgz#f1b0f963348cc191645ef0bdeff7a67c6aa25485"
+    integrity sha512-hS4pxwn1ZGXVkmgD4tpFpaumUaAg2ZzbTrxltfC5yPw4BJV+mGkfnQOB4VpWEYZw2jv65Z0wLwDE/piQiPPZ3w==
+    dependencies:
+      "@babel/runtime" "^7.6.0"
+      "@date-io/core" "1.x"
+      "@types/styled-jsx" "^2.2.8"
+      clsx "^1.0.2"
+      react-transition-group "^4.0.0"
+      rifm "^0.7.0"
+  
   "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/@protobufjs/aspromise/-/aspromise-1.1.2.tgz#9b8b0cc663d669a7d8f6f5d0893a14d348f30fbf"
@@ -1750,6 +1804,13 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
     integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
+  
+  "@types/styled-jsx@^2.2.8":
+    version "2.2.8"
+    resolved "https://registry.yarnpkg.com/@types/styled-jsx/-/styled-jsx-2.2.8.tgz#b50d13d8a3c34036282d65194554cf186bab7234"
+    integrity sha512-Yjye9VwMdYeXfS71ihueWRSxrruuXTwKCbzue4+5b2rjnQ//AtyM7myZ1BEhNhBQ/nL/RE7bdToUoLln2miKvg==
+    dependencies:
+      "@types/react" "*"
   
   "@types/yargs-parser@*":
     version "15.0.0"
@@ -2409,6 +2470,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
     integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
   
+  clsx@^1.0.2:
+    version "1.1.1"
+    resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+    integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
+  
   code-point-at@^1.0.0:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
@@ -2659,6 +2725,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.3.tgz#2b410bbeba38ba9633353aff34b05d9755d065f8"
     integrity sha512-jPl+wbWPOWJ7SXsWyqGRk3lGecbar0Cb0OvZF/r/ZU011R4YqiRehgkQ9p4eQfo9DSDLqLL3wHwfxeJiuIsNag==
   
+  date-fns@^2.21.2:
+    version "2.21.2"
+    resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.21.2.tgz#9db92305cf00626e9122e56c72195b17725594aa"
+    integrity sha512-FMkG7pIPx64mGIpS2LOb3Wp3O606H/hatoiz7G0oiYWai1izdM4tF1dd7QABv2NogkIDI4wxsfLLFQSuVvDHgA==
+  
   dayjs@^1.8.15:
     version "1.8.35"
     resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.35.tgz#67118378f15d31623f3ee2992f5244b887606888"
@@ -2797,6 +2868,14 @@ Lockfile:
     version "1.0.3"
     resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
     integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
+  
+  dom-helpers@^5.0.1:
+    version "5.2.1"
+    resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.2.1.tgz#d9400536b2bf8225ad98fe052e029451ac40e902"
+    integrity sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==
+    dependencies:
+      "@babel/runtime" "^7.8.7"
+      csstype "^3.0.2"
   
   dom-storage@2.1.0:
     version "2.1.0"
@@ -3000,6 +3079,13 @@ Lockfile:
       snapdragon "^0.8.1"
       to-regex "^3.0.1"
   
+  expo-app-auth@~9.2.0:
+    version "9.2.0"
+    resolved "https://registry.yarnpkg.com/expo-app-auth/-/expo-app-auth-9.2.0.tgz#88868639f96c4fae973b86bd8712477e2db9dc2c"
+    integrity sha512-aRsRTfCfpuR8n8nO22WwwwTB7JhhJv7T9ZB5f68u6NN/FTF5CnhI3m5t0lawmirNSdmK+mGL0L+gvRyVyt1WLQ==
+    dependencies:
+      invariant "^2.2.4"
+  
   expo-application@~2.3.0:
     version "2.3.0"
     resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-2.3.0.tgz#5e6929a1fcee543ac433fb2cee1f88738369e26b"
@@ -3031,6 +3117,11 @@ Lockfile:
     dependencies:
       fbjs "1.0.0"
   
+  expo-facebook@~9.0.0:
+    version "9.0.0"
+    resolved "https://registry.yarnpkg.com/expo-facebook/-/expo-facebook-9.0.0.tgz#868ee4f88d77560f5ef76d143269bd15eed50b2e"
+    integrity sha512-BqDWEUln4m+iGEjS+ekmY2BCjxjEHflI+zFsvXoF3KqCMFGzUR43HkyHHNXalbuX/6sLJtkMnDZ7i2rs8MKGWA==
+  
   expo-file-system@~9.2.0:
     version "9.2.0"
     resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-9.2.0.tgz#e8efde36968a1e6d826236044a970e85bfe0aeee"
@@ -3057,6 +3148,20 @@ Lockfile:
     dependencies:
       fbjs "1.0.0"
       fontfaceobserver "^2.1.0"
+  
+  expo-google-app-auth@^8.1.3:
+    version "8.1.3"
+    resolved "https://registry.yarnpkg.com/expo-google-app-auth/-/expo-google-app-auth-8.1.3.tgz#ce576e0d080713459d97e6874c05f58f9008040e"
+    integrity sha512-qDq+yAJATwcBLek4FMEUPD5h3m3+tJN8VmDRW073eoNGM1fxJ6543vYpRssBCNU3CHSGyxZgz+lNoc9uL46Ttw==
+    dependencies:
+      expo-app-auth "~9.2.0"
+  
+  expo-google-sign-in@~8.3.0:
+    version "8.3.0"
+    resolved "https://registry.yarnpkg.com/expo-google-sign-in/-/expo-google-sign-in-8.3.0.tgz#802af4ab36003a413a0dbac8ba5066566c5611bb"
+    integrity sha512-A84sdVcWuiolhGx6h+WS6H7teLz0f1xZAqF6LmMmtgGWeFAfsDyTrX068Ej40tohSLUHohm6BemRS8OURxPSpw==
+    dependencies:
+      invariant "^2.2.4"
   
   expo-image-picker@~9.1.0:
     version "9.1.1"
@@ -3399,6 +3504,11 @@ Lockfile:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/fontfaceobserver/-/fontfaceobserver-2.1.0.tgz#e2705d293e2c585a6531c2a722905657317a2991"
     integrity sha512-ReOsO2F66jUa0jmv2nlM/s1MiutJx/srhAe2+TE8dJCMi02ZZOcCTxTCQFr3Yet+uODUtnr4Mewg+tNQ+4V1Ng==
+  
+  fontsource-roboto@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/fontsource-roboto/-/fontsource-roboto-4.0.0.tgz#35eacd4fb8d90199053c0eec9b34a57fb79cd820"
+    integrity sha512-zD6L8nvdWRcwSgp4ojxFchG+MPj8kXXQKDEAH9bfhbxy+lkpvpC1WgAK0lCa4dwobv+hvAe0uyHaawcgH7WH/g==
   
   for-in@^1.0.2:
     version "1.0.2"
@@ -4816,6 +4926,11 @@ Lockfile:
     dependencies:
       warning "^4.0.1"
   
+  moment@^2.29.0:
+    version "2.29.0"
+    resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.0.tgz#fcbef955844d91deb55438613ddcec56e86a3425"
+    integrity sha512-z6IJ5HXYiuxvFTI6eiQ9dm77uE0gyy1yXNApVHqTcnIKfY9tIwEjlzsZ6u1LQXvVgKeTnv9Xm7NDvJ7lso3MtA==
+  
   ms@2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -5627,10 +5742,10 @@ Lockfile:
       prop-types "^15.6.0"
       react-timer-mixin "^0.13.4"
   
-  react-native-webview@10.7.0:
-    version "10.7.0"
-    resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-10.7.0.tgz#b96e152ffdae4eeffaa74f43671a35733885b52d"
-    integrity sha512-4TSYwJqMBUTKB9+xqGbPwx+eLXbp6RRD7lQ2BumT8eSTfuuqr2rXNqcrlKU1VRla7QGGYowmYmxl2aXIx5k9wA==
+  react-native-webview@^11.4.3:
+    version "11.4.3"
+    resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.4.3.tgz#7651370b604c8cc27701095e14e05cfefa8f5632"
+    integrity sha512-bC6r7vbukC1QYbG2vTmif8/gt6jzlGA7WK7zeVLt8ysZJvBNtoHtT2k7EoMgJIW6/6DTy1rrn6uZS4v2Fa4exQ==
     dependencies:
       escape-string-regexp "2.0.0"
       invariant "2.2.4"
@@ -5676,6 +5791,16 @@ Lockfile:
     version "0.13.4"
     resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
     integrity sha512-4+ow23tp/Tv7hBM5Az5/Be/eKKF7DIvJ09voz5LyHGQaqqz9WV8YMs31eFvcYQs7d451LSg7kDJV70XYN/Ug/Q==
+  
+  react-transition-group@^4.0.0:
+    version "4.4.1"
+    resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.1.tgz#63868f9325a38ea5ee9535d828327f85773345c9"
+    integrity sha512-Djqr7OQ2aPUiYurhPalTrVy9ddmFCCzwhqQmtN+J3+3DzLO209Fdr70QrN8Z3DsglWql6iY1lDWAfpFiBtuKGw==
+    dependencies:
+      "@babel/runtime" "^7.5.5"
+      dom-helpers "^5.0.1"
+      loose-envify "^1.4.0"
+      prop-types "^15.6.2"
   
   react@16.13.1:
     version "16.13.1"
@@ -5827,6 +5952,13 @@ Lockfile:
     version "0.1.15"
     resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
     integrity sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
+  
+  rifm@^0.7.0:
+    version "0.7.0"
+    resolved "https://registry.yarnpkg.com/rifm/-/rifm-0.7.0.tgz#debe951a9c83549ca6b33e5919f716044c2230be"
+    integrity sha512-DSOJTWHD67860I5ojetXdEQRIBvF6YcpNe53j0vn1vp9EUb9N80EiZTxgP+FkDKorWC8PZw052kTF4C1GOivCQ==
+    dependencies:
+      "@babel/runtime" "^7.3.1"
   
   rimraf@^2.5.4, rimraf@^2.6.1:
     version "2.7.1"

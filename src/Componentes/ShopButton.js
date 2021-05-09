@@ -13,7 +13,7 @@ export default function ShopButton() {
         navigation.navigate("mitienda");
       }}
     >
-      <Icon name="publish" color="#fff" size={30} />
+      <Icon name="publish" color="#fff" size={20} />
     </TouchableHighlight>
   );
 }
@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#d38225",
     alignItems: "center",
     justifyContent: "center",
-    width: 72,
-    height: 72,
+    width: 62,
+    height: 62,
     borderRadius: 36,
-    top: -20,
+    top: 0,
     shadowRadius: 5,
     shadowOffset: { height: 10 },
     shadowOpacity: 0.3,

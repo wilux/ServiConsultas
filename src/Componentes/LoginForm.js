@@ -61,7 +61,7 @@ export default function LoginForm(props) {
         }}
         leftIcon={{
           type: "material-community",
-          name: "electric-switch",
+          name: "account",
           color: "#1b94ce",
         }}
         onChangeText={(text) => {

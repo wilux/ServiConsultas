@@ -65,7 +65,7 @@ export default function RegisterForm(props) {
         }}
         leftIcon={{
           type: "material-community",
-          name: "electric-switch",
+          name: "mail",
           color: "#1b94ce",
         }}
         onChangeText={(text) => {

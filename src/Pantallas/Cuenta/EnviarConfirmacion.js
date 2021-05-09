@@ -22,11 +22,13 @@ export default function EnviarConfirmacion() {
   const enviarconfirmacion = async () => {
     if (!isEmpty(phone)) {
       const numero = `+${callingCode}${phone}`;
+      console.log(numero);
       const verificationid = await enviarconfirmacionphone(
         numero,
         recaptchaVerifier
       );
 
+      console.log(verificationid);
       if (!isEmpty(verificationid)) {
         navigation.navigate("confirmar-movil", { verificationid });
       } else {

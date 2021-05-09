@@ -20,6 +20,8 @@ import { size } from "lodash";
 import Loading from "../../Componentes/Loading";
 import Carousel from "../../Componentes/Carousel";
 import Modal from "../../Componentes/Modal";
+import { Calendar } from "react-native-calendars";
+
 export default function Detalle(props) {
   const { route } = props;
   const { id, titulo } = route.params;
@@ -30,10 +32,33 @@ export default function Detalle(props) {
   const [photovendedor, setphotovendedor] = useState("");
   const [phonenumber, setphonenumber] = useState("");
   const [mensaje, setmensaje] = useState("");
+
   const [activeslide, setactiveslide] = useState(0);
   const [loading, setloading] = useState(false);
   const [isVisible, setisvisible] = useState(false);
   const usuarioactual = ObtenerUsuario();
+
+  let DiasDisponibles = {};
+
+  // const pintarCalendario = () => {
+  //   var date = [];
+  //   var arrayOfDates = ["2021-05-06", "2021-05-25", "2021-05-12"];
+
+  //   for (let index = 0; index < arrayOfDates.length; index++) {
+  //     const element = arrayOfDates[index];
+  //     const estructura = {
+  //       [element]: {
+  //         selected: true,
+  //         marked: true,
+  //         selectedColor: "blue",
+  //       },
+  //     };
+
+  //     date.push(estructura);
+  //     DiasDisponibles = Object.values(date);
+  //     console.log(DiasDisponibles);
+  //   }
+  // };
 
   console.log(id);
   console.log(titulo);
@@ -55,6 +80,7 @@ export default function Detalle(props) {
         setnombrevendedor(resultado.displayName);
         setphotovendedor(resultado.photoURL);
         setphonenumber(resultado.phoneNumber);
+        //pintarCalendario();
       }
     })();
   }, [producto]);
@@ -64,7 +90,7 @@ export default function Detalle(props) {
       <ScrollView style={styles.container}>
         <Carousel
           imagenes={producto.imagenes}
-          height={400}
+          height={200}
           width={Dimensions.get("window").width}
           activeslide={activeslide}
           setactiveslide={setactiveslide}
@@ -80,13 +106,49 @@ export default function Detalle(props) {
           />
           <Text style={styles.titulos}>{producto.titulo}</Text>
           <Text style={styles.precio}>
-            {parseFloat(producto.precio).toFixed(2)}
+            ${parseFloat(producto.precio).toFixed(2)}
           </Text>
 
           <View>
             <Text style={styles.descripcion}>{producto.descripcion}</Text>
             <Rating imageSize={20} startingValue={producto.rating} readonly />
           </View>
+          <Text style={styles.subtitulo}>Disponibilidad del proveedor</Text>
+          {/* Esto debe completarse dinamicamente segun la ocupacion del proveedor */}
+          <Calendar
+            style={{
+              borderWidth: 1,
+              borderColor: "blue",
+              height: 350,
+            }}
+            markedDates={{
+              "2021-05-16": {
+                selected: true,
+                marked: true,
+                selectedColor: "green",
+              },
+              "2021-05-17": {
+                selected: true,
+                marked: true,
+                selectedColor: "green",
+              },
+              "2021-05-18": {
+                selected: true,
+                marked: true,
+                selectedColor: "green",
+              },
+              "2021-05-10": {
+                selected: true,
+                marked: true,
+                selectedColor: "green",
+              },
+              "2021-05-21": {
+                selected: true,
+                marked: true,
+                selectedColor: "green",
+              },
+            }}
+          ></Calendar>
 
           <Text style={styles.titulos}>Contactar al Anunciante</Text>
           <View style={styles.avatarbox}>
@@ -285,6 +347,12 @@ const styles = StyleSheet.create({
   titulos: {
     color: "#075e54",
     fontSize: 24,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  subtitulo: {
+    color: "#000",
+    fontSize: 20,
     fontWeight: "bold",
     marginTop: 10,
   },
