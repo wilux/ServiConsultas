@@ -110,6 +110,28 @@ export const ObtenerUsuario = () => {
   return firebase.auth().currentUser;
 };
 
+export const ListarMiPerfil = async () => {
+  let perfiles = [];
+
+  await db
+    .collection("Usuarios")
+    .where("usuario", "==", ObtenerUsuario().uid)
+    // .where("status", "==", 0)
+    .get()
+    .then((response) => {
+      response.forEach((doc) => {
+        const perfil = doc.data();
+        perfil.id = doc.id;
+        perfiles.push(perfil);
+      });
+    })
+    .catch((err) => {
+      console.log("error");
+    });
+
+  return perfiles;
+};
+
 export const addRegistroEspecifico = async (coleccion, doc, data) => {
   const resultado = { error: "", statusreponse: false };
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Icon, Input, Button } from "react-native-elements";
+import { Icon, Input, Button, CheckBox } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { validaremail } from "../Utils/Utils";
 import { isEmpty, size } from "lodash";
@@ -9,12 +9,18 @@ import Loading from "../Componentes/Loading";
 
 export default function RegisterForm(props) {
   const { toastRef } = props;
+  const [tipo, setTipo] = useState("");
+  const [checked, setCheck] = useState(false);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [repetirpassword, setrepetirpassword] = useState("");
   const navigation = useNavigation();
   const [show, setshow] = useState(false);
   const [loading, setloading] = useState(false);
+
+  const tipoUsuario = () => {
+    return checked();
+  };
 
   function crearcuenta() {
     if (isEmpty(email) || isEmpty(password) || isEmpty(repetirpassword)) {
@@ -112,6 +118,12 @@ export default function RegisterForm(props) {
         }}
         secureTextEntry={!show}
         value={repetirpassword}
+      />
+      <CheckBox
+        center
+        title="Marque aquí si va a ofrecer un servicio"
+        checked={checked}
+        onPress={() => setCheck(!checked)}
       />
       <Button
         title="CREAR CUENTA"

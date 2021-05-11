@@ -55,7 +55,7 @@ export default function MiTienda() {
           >
             <Icon
               type="material-community"
-              name="hammer-screwdriver"
+              name="hammer"
               size={100}
               color="#25d366"
               style={{ margin: 10 }}

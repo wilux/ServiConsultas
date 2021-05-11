@@ -85,6 +85,127 @@ export default function Detalle(props) {
     })();
   }, [producto]);
 
+  function EnviarMensaje(props) {
+    const {
+      isVisible,
+      setisVisible,
+      nombrevendedor,
+      avatarvendedor,
+      mensaje,
+      setmensaje,
+      receiver,
+      sender,
+      token,
+      producto,
+      setloading,
+      nombrecliente,
+    } = props;
+
+    const enviarNotificacion = async () => {
+      if (!mensaje) {
+        Alert.alert("Validación", "Favor introduce un texto para el mensaje", [
+          {
+            style: "default",
+            text: "Entendido",
+          },
+        ]);
+      } else {
+        setloading(true);
+        const notificacion = {
+          sender: sender,
+          receiver: receiver,
+          mensaje,
+          fechacreacion: new Date(),
+          productoid: producto.id,
+          productotitulo: producto.titulo,
+          visto: 0,
+        };
+
+        const resultado = await addRegistro("Notificaciones", notificacion);
+        if (resultado.statusreponse) {
+          const mensajenotificacion = setMensajeNotificacion(
+            token,
+            `Cliente Interesado - ${producto.titulo}`,
+            `${nombrecliente}, te ha enviado un mensaje`,
+            { data: "Prospecto Interesado" }
+          );
+
+          const respuesta = await sendPushNotification(mensajenotificacion);
+          setloading(false);
+
+          if (respuesta) {
+            Alert.alert(
+              "Acción realizada correctamente",
+              "Se ha enviado el mensaje correctamente",
+              [
+                {
+                  style: "cancel",
+                  text: "Entendido",
+                  onPress: () => setisVisible(false),
+                },
+              ]
+            );
+            setmensaje("");
+          } else {
+            Alert.alert(
+              "Error",
+              "Se ha producido un error al enviar mensaje, favor intentelo nuevamente  ",
+              [
+                {
+                  style: "cancel",
+                  text: "Entendido",
+                },
+              ]
+            );
+            setloading(false);
+          }
+        }
+      }
+    };
+
+    return (
+      <Modal isVisible={isVisible} setIsVisible={setisVisible}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: 16,
+            borderRadius: 20,
+          }}
+        >
+          <Avatar
+            source={
+              avatarvendedor
+                ? { uri: avatarvendedor }
+                : require("../../../assets/avatar.jpg")
+            }
+            style={styles.photovendor}
+          />
+
+          <Text style={{ color: "#075e54", fontSize: 16, fontWeight: "bold" }}>
+            Envíale un mensaje a {nombrevendedor}
+          </Text>
+
+          <Input
+            placeholder="Escribe un mensaje"
+            multiline={true}
+            inputStyle={styles.textArea}
+            onChangeText={(text) => {
+              setmensaje(text);
+            }}
+            value={mensaje}
+          />
+          <Button
+            title="Enviar mensaje"
+            buttonStyle={styles.btnsend}
+            containerStyle={{ width: "90%" }}
+            onPress={enviarNotificacion}
+          />
+        </View>
+      </Modal>
+    );
+  }
+
   if (producto.lenght !== 0) {
     return (
       <ScrollView style={styles.container}>
@@ -113,6 +234,7 @@ export default function Detalle(props) {
             <Text style={styles.descripcion}>{producto.descripcion}</Text>
             <Rating imageSize={20} startingValue={producto.rating} readonly />
           </View>
+
           <Text style={styles.subtitulo}>Disponibilidad del proveedor</Text>
           {/* Esto debe completarse dinamicamente segun la ocupacion del proveedor */}
           <Calendar
@@ -121,31 +243,42 @@ export default function Detalle(props) {
               borderColor: "blue",
               height: 350,
             }}
+            disabledByDefault
+            disableAllTouchEventsForDisabledDays={true}
+            onDayPress={(day) => {
+              const mensajewhatsapp = `Estimado ${nombrevendedor}, mi nombre es ${usuarioactual.displayName}  me interesa el producto ${producto.titulo} que está en WhatsCommerce`;
+              enviarWhatsapp(phonenumber, mensajewhatsapp);
+            }}
             markedDates={{
               "2021-05-16": {
                 selected: true,
                 marked: true,
                 selectedColor: "green",
+                disabled: false,
               },
               "2021-05-17": {
                 selected: true,
                 marked: true,
                 selectedColor: "green",
+                disabled: false,
               },
               "2021-05-18": {
                 selected: true,
                 marked: true,
                 selectedColor: "green",
+                disabled: false,
               },
               "2021-05-10": {
                 selected: true,
                 marked: true,
                 selectedColor: "green",
+                disabled: false,
               },
               "2021-05-21": {
                 selected: true,
                 marked: true,
                 selectedColor: "green",
+                disabled: false,
               },
             }}
           ></Calendar>
@@ -208,127 +341,6 @@ export default function Detalle(props) {
       </ScrollView>
     );
   }
-}
-
-function EnviarMensaje(props) {
-  const {
-    isVisible,
-    setisVisible,
-    nombrevendedor,
-    avatarvendedor,
-    mensaje,
-    setmensaje,
-    receiver,
-    sender,
-    token,
-    producto,
-    setloading,
-    nombrecliente,
-  } = props;
-
-  const enviarNotificacion = async () => {
-    if (!mensaje) {
-      Alert.alert("Validación", "Favor introduce ubn texto para el mensaje", [
-        {
-          style: "default",
-          text: "Entendido",
-        },
-      ]);
-    } else {
-      setloading(true);
-      const notificacion = {
-        sender: sender,
-        receiver: receiver,
-        mensaje,
-        fechacreacion: new Date(),
-        productoid: producto.id,
-        productotitulo: producto.titulo,
-        visto: 0,
-      };
-
-      const resultado = await addRegistro("Notificaciones", notificacion);
-      if (resultado.statusreponse) {
-        const mensajenotificacion = setMensajeNotificacion(
-          token,
-          `Cliente Interesado - ${producto.titulo}`,
-          `${nombrecliente}, te ha enviado un mensaje`,
-          { data: "Prospecto Interesado" }
-        );
-
-        const respuesta = await sendPushNotification(mensajenotificacion);
-        setloading(false);
-
-        if (respuesta) {
-          Alert.alert(
-            "Acción realizada correctamente",
-            "Se ha enviado el mensaje correctamente",
-            [
-              {
-                style: "cancel",
-                text: "Entendido",
-                onPress: () => setisVisible(false),
-              },
-            ]
-          );
-          setmensaje("");
-        } else {
-          Alert.alert(
-            "Error",
-            "Se ha producido un error al enviar mensaje, favor intentelo nuevamente  ",
-            [
-              {
-                style: "cancel",
-                text: "Entendido",
-              },
-            ]
-          );
-          setloading(false);
-        }
-      }
-    }
-  };
-
-  return (
-    <Modal isVisible={isVisible} setIsVisible={setisVisible}>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: 16,
-          borderRadius: 20,
-        }}
-      >
-        <Avatar
-          source={
-            avatarvendedor
-              ? { uri: avatarvendedor }
-              : require("../../../assets/avatar.jpg")
-          }
-          style={styles.photovendor}
-        />
-
-        <Text style={{ color: "#075e54", fontSize: 16, fontWeight: "bold" }}>
-          Envíale un mensaje a {nombrevendedor}
-        </Text>
-
-        <Input
-          placeholder="Escribe un mensaje"
-          multiline={true}
-          inputStyle={styles.textArea}
-          onChangeText={(text) => {
-            setmensaje(text);
-          }}
-          value={mensaje}
-        />
-        <Button
-          title="Enviar mensaje"
-          buttonStyle={styles.btnsend}
-          containerStyle={{ width: "90%" }}
-          onPress={enviarNotificacion}
-        />
-      </View>
-    </Modal>
-  );
 }
 
 const styles = StyleSheet.create({

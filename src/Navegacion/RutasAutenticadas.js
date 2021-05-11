@@ -2,10 +2,10 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createStackNavigator } from "@react-navigation/stack";
 import { Icon } from "react-native-elements";
-import ShopButton from "../Componentes/ShopButton";
+//import ShopButton from "../Componentes/ShopButton";
 import CustomDrawerContent from "../Componentes/CustomDrawerContent";
-
 import TiendaStack from "./TiendaStack";
 import PerfilStack from "./PerfilStack";
 import MiTienda from "./MiTiendaStack";
@@ -39,11 +39,20 @@ const TabBar = () => {
         name="Servicios"
         optiones={{ title: "Servicios" }}
       />
+
       <Tab.Screen
         component={MiTienda}
-        name="mitienda"
-        options={{ title: "", tabBarIcon: () => <ShopButton /> }}
+        name="Mis Servicios"
+        optiones={{ title: "Mis Servicios" }}
       />
+      {/* <Tab.Screen
+        component={MiTienda}
+        name="mitienda"
+        options={{
+          title: "",
+          tabBarIcon: () => <ShopButton />,
+        }}
+      /> */}
       <Tab.Screen
         component={PerfilStack}
         name="Cuenta"
@@ -65,7 +74,7 @@ function mostrarIcono(route, color) {
       iconName = "shield-account";
       break;
 
-    case "mitienda":
+    case "Mis Servicios":
       iconName = "home-flood";
       break;
   }
@@ -74,6 +83,8 @@ function mostrarIcono(route, color) {
     <Icon type="material-community" name={iconName} size={24} color={color} />
   );
 }
+
+const Stack = createStackNavigator();
 
 export default function RutasAutenticadas() {
   return (

@@ -217,7 +217,7 @@ function Producto(props) {
         <Text style={{ textAlign: "center" }}>
           {descripcion.substring(0, 50)}
         </Text>
-        <Text style={styles.vendidopor}>Vendido por</Text>
+        <Text style={styles.vendidopor}>Ofrecido por</Text>
         <View style={styles.avatarbox}>
           <Avatar
             source={
@@ -287,23 +287,24 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   header: {
-    height: "20%",
+    height: "25%",
     width: "100%",
     backgroundColor: "#1b94ce",
   },
   menu: {
-    marginTop: 20,
+    marginTop: 40,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 80,
+    height: 80,
+    marginTop: -15,
   },
   card: {
     width: "100%",
-    paddingVertical: 20,
+    paddingVertical: 10,
     flex: 1,
     paddingHorizontal: 10,
     marginHorizontal: 5,
@@ -342,8 +343,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   avatar: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
   },
   precio: {
     marginTop: 10,

@@ -265,7 +265,7 @@ function Botonera(props) {
           color={categoria === "herreria" ? "#1b94ce" : "#757575"}
           reverse
         />
-        <Text>herreria</Text>
+        <Text>Herrería</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btncategoria}
@@ -280,7 +280,7 @@ function Botonera(props) {
           color={categoria === "plomeria" ? "#1b94ce" : "#757575"}
           reverse
         />
-        <Text>Artículos</Text>
+        <Text>Plomería</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btncategoria}
@@ -295,7 +295,7 @@ function Botonera(props) {
           color={categoria === "electricista" ? "#1b94ce" : "#757575"}
           reverse
         />
-        <Text>electricista</Text>
+        <Text>Electricidad</Text>
       </TouchableOpacity>
     </View>
   );

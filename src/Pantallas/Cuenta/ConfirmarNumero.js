@@ -9,6 +9,7 @@ import {
   ObtenerUsuario,
   addRegistroEspecifico,
 } from "../../Utils/Acciones";
+import { tipoUsuario } from "../../Componentes/RegisterForm";
 
 export default function ConfirmarNumero(props) {
   const { route } = props;
@@ -30,6 +31,8 @@ export default function ConfirmarNumero(props) {
         phoneNumber,
       } = ObtenerUsuario();
 
+      const proveedor = "true";
+
       const registro = await addRegistroEspecifico("Usuarios", uid, {
         token,
         displayName,
@@ -37,7 +40,10 @@ export default function ConfirmarNumero(props) {
         email,
         phoneNumber,
         fechacreacion: new Date(),
+        proveedor,
+        usuario: ObtenerUsuario().uid,
       });
+
       setloading(false);
     } else {
       Alert.alert("Error", "Favor válidar el código introducido", [

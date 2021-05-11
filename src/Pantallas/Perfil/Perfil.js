@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TextInput, StyleSheet, StatusBar } from "react-native";
-import { Icon, Avatar, Input } from "react-native-elements";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { Avatar, CheckBox, Button, Overlay } from "react-native-elements";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { cargarImagenesxAspecto, validaremail } from "../../Utils/Utils";
 import {
   subirImagenesBatch,
   ObtenerUsuario,
+  ListarMiPerfil,
   addRegistroEspecifico,
   actualilzarPerfil,
   enviarconfirmacionphone,
@@ -16,30 +18,41 @@ import InputEditable from "../../Componentes/InputEditable";
 import Modal from "../../Componentes/Modal";
 import CodeInput from "react-native-code-input";
 import FirebaseRecapcha from "../../Utils/FirebaseRecapcha";
+import { Calendar } from "react-native-calendars";
 
 export default function Perfil() {
+  const navigation = useNavigation();
   const [imagenperfil, setimagenperfil] = useState("");
   const [loading, setloading] = useState(false);
   const usuario = ObtenerUsuario();
+  const perfil = ListarMiPerfil();
   const [displayName, setdisplayName] = useState("");
   const [phoneNumber, setphoneNumber] = useState("");
+  const [proveedor, setProveedor] = useState("");
   const [email, setemail] = useState("");
-
   const [editablename, seteditablename] = useState(false);
   const [editableemail, seteditableemail] = useState(false);
   const [editablephone, seteditablephone] = useState(false);
-
+  const [checked, setCheck] = useState(false);
   const [verificationid, setverificationid] = useState("");
   const [isVisible, setisVisible] = useState(false);
 
   const recapcha = useRef();
 
+  const [visible, setVisible] = useState(false);
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+
   useEffect(() => {
     setimagenperfil(usuario.photoURL);
-    const { displayName, phoneNumber, email } = usuario;
+    const { displayName, phoneNumber, email, proveedor } = usuario;
     setdisplayName(displayName);
     setphoneNumber(phoneNumber);
+    setProveedor(proveedor);
     setemail(email);
+    setCheck(perfil);
   }, []);
 
   const onChangeInput = (input, valor) => {
@@ -68,6 +81,15 @@ export default function Perfil() {
         return phoneNumber;
         break;
     }
+  };
+
+  const guardarCambios = () => {
+    // addRegistroEspecifico("Usuarios", usuario.uid, { proveedor: checked });
+    console.log("Guardar ");
+    // console.log("User infio: " + usuario.proveedor);
+    console.log(usuario.proveedor);
+    console.log(perfil);
+    //console.log(usuario.uid);
   };
 
   const actualizarValor = async (input, valor) => {
@@ -135,6 +157,67 @@ export default function Perfil() {
         setimagenperfil={setimagenperfil}
         setloading={setloading}
       />
+      <View>
+        <View
+          styles={{
+            backgroundColor: "red",
+          }}
+        >
+          <CheckBox
+            center
+            title="¿Es Proveedor?"
+            checked={checked}
+            onPress={() => setCheck(!checked)}
+          />
+        </View>
+
+        <View>
+          <Overlay
+            fullScreen={true}
+            isVisible={visible}
+            onBackdropPress={toggleOverlay}
+          >
+            <Text style={styles.titulomodal}>Gestion de Turnos</Text>
+            <Calendar
+              style={styles.calendario}
+              current={Date()}
+              minDate={Date()}
+              onDayPress={(day) => {
+                console.log("selected day", day),
+                  { toggleOverlay2 },
+                  { toggleOverlay };
+              }}
+              markedDates={{
+                "2021-05-16": {
+                  selected: true,
+                  marked: true,
+                  selectedColor: "red",
+                },
+                "2021-05-17": {
+                  selected: true,
+                  marked: true,
+                  selectedColor: "green",
+                },
+                "2021-05-18": {
+                  selected: true,
+                  marked: true,
+                  selectedColor: "green",
+                },
+                "2021-05-10": {
+                  selected: true,
+                  marked: true,
+                  selectedColor: "red",
+                },
+                "2021-05-21": {
+                  selected: true,
+                  marked: true,
+                  selectedColor: "green",
+                },
+              }}
+            ></Calendar>
+          </Overlay>
+        </View>
+      </View>
       <FormDatos
         onChangeInput={onChangeInput}
         obtenerValor={obtenerValor}
@@ -145,8 +228,25 @@ export default function Perfil() {
         seteditablephone={seteditablephone}
         seteditablename={seteditablename}
         actualizarValor={actualizarValor}
+        checked={checked}
+        setCheck={setCheck}
+        guardarCambios={guardarCambios}
+      />
+      <Text style={styles.label}>Mi disponibilidad</Text>
+      <Button
+        isVisible={checked}
+        buttonStyle={styles.btn_turnos}
+        title="Gestionar turnos"
+        onPress={() => {
+          navigation.navigate("turno");
+        }}
       />
 
+      <Button
+        title="Guardar"
+        buttonStyle={styles.btn_guardar}
+        onPress={() => guardarCambios()}
+      />
       <ModalVerification
         isVisibleModal={isVisible}
         setisVisibleModal={setisVisible}
@@ -161,11 +261,11 @@ export default function Perfil() {
 
 function CabeceraBG(props) {
   const { nombre } = props;
-  console.log(nombre);
+  //console.log(nombre);
   return (
     <View>
       <View style={styles.bg}>
-        <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
+        <Text style={{ color: "#fff", fontSize: 38, fontWeight: "bold" }}>
           {nombre}
         </Text>
       </View>
@@ -300,9 +400,9 @@ function ModalVerification(props) {
 const styles = StyleSheet.create({
   bg: {
     width: "100%",
-    height: 200,
-    borderBottomLeftRadius: 200,
-    borderBottomRightRadius: 200,
+    // height: 130,
+    borderBottomLeftRadius: 100,
+    borderBottomRightRadius: 100,
     backgroundColor: "#1b94ce",
     justifyContent: "center",
     alignItems: "center",
@@ -310,7 +410,7 @@ const styles = StyleSheet.create({
   avatarinline: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: -70,
+    marginTop: 0,
   },
   avatar: {
     width: 80,
@@ -330,5 +430,33 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 14,
     textAlign: "center",
+  },
+  label: {
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#1b94ce",
+    fontSize: 16,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  calendario: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  btn_turnos: {
+    marginTop: 30,
+    marginBottom: 30,
+    width: 230,
+    backgroundColor: "green",
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+  btn_guardar: {
+    marginBottom: 10,
+    width: 230,
+    //backgroundColor: "green",
+    borderRadius: 10,
+    alignSelf: "center",
   },
 });
