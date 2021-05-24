@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image, Alert } from "react-native";
 import CodeInput from "react-native-code-input";
 import { useNavigation } from "@react-navigation/native";
 import Loading from "../../Componentes/Loading";
@@ -23,13 +23,8 @@ export default function ConfirmarNumero(props) {
     console.log(resultado);
     if (resultado) {
       const token = await obtenerToken();
-      const {
-        uid,
-        displayName,
-        photoURL,
-        email,
-        phoneNumber,
-      } = ObtenerUsuario();
+      const { uid, displayName, photoURL, email, phoneNumber } =
+        ObtenerUsuario();
 
       const proveedor = "true";
 
@@ -66,6 +61,7 @@ export default function ConfirmarNumero(props) {
       <Text style={styles.titulo}>
         Favor revise su sms e introduzca los códigos de confirmación
       </Text>
+      inputComponent={() => TextInput}
       <CodeInput
         activeColor="#fff"
         inactiveColor="#fff"

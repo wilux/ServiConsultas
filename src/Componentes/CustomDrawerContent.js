@@ -57,7 +57,7 @@ export default function CustomDrawerContent(props) {
               )}
               label="Mis Servicios"
               onPress={() => {
-                props.navigation.navigate("mitienda");
+                props.navigation.navigate("Mis Servicios");
               }}
             />
             <DrawerItem
@@ -71,7 +71,7 @@ export default function CustomDrawerContent(props) {
               )}
               label="Cuenta"
               onPress={() => {
-                props.navigation.navigate("cuenta");
+                props.navigation.navigate("Cuenta");
               }}
             />
           </View>

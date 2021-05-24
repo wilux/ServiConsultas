@@ -132,6 +132,28 @@ export const ListarMiPerfil = async () => {
   return perfiles;
 };
 
+export const ListarMisProductos = async () => {
+  let productos = [];
+
+  await db
+    .collection("Productos")
+    .where("usuario", "==", ObtenerUsuario().uid)
+    // .where("status", "==", 0)
+    .get()
+    .then((response) => {
+      response.forEach((doc) => {
+        const producto = doc.data();
+        producto.id = doc.id;
+        productos.push(producto);
+      });
+    })
+    .catch((err) => {
+      console.log("error");
+    });
+
+  return productos;
+};
+
 export const addRegistroEspecifico = async (coleccion, doc, data) => {
   const resultado = { error: "", statusreponse: false };
 
@@ -229,29 +251,6 @@ export const addRegistro = async (colecion, data) => {
     });
 
   return resultado;
-};
-
-export const ListarMisProductos = async () => {
-  let productos = [];
-
-  await db
-    .collection("Productos")
-    .where("usuario", "==", ObtenerUsuario().uid)
-    // .where("status", "==", 0)
-    .get()
-    .then((response) => {
-      response.forEach((doc) => {
-        const producto = doc.data();
-        producto.id = doc.id;
-        productos.push(producto);
-        console.log(productos);
-      });
-    })
-    .catch((err) => {
-      console.log("error");
-    });
-
-  return productos;
 };
 
 export const actualizarRegistro = async (coleccion, documento, data) => {
@@ -378,11 +377,10 @@ export const iniciarnotificaciones = (
     }
   );
 
-  responseListener.current = Notifications.addNotificationResponseReceivedListener(
-    (response) => {
+  responseListener.current =
+    Notifications.addNotificationResponseReceivedListener((response) => {
       console.log(response);
-    }
-  );
+    });
 
   return () => {
     Notifications.removeNotificationSubscription(notificationListener);

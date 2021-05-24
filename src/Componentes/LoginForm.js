@@ -230,15 +230,10 @@ export default function LoginForm(props) {
         appName: "omarcito",
         domain: "connect.facebook.net",
       });
-      const {
-        type,
-        token,
-        expires,
-        permissions,
-        declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ["public_profile"],
-      });
+      const { type, token, expires, permissions, declinedPermissions } =
+        await Facebook.logInWithReadPermissionsAsync({
+          permissions: ["public_profile"],
+        });
       if (type === "success") {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(
@@ -283,7 +278,7 @@ const styles = StyleSheet.create({
   },
   cuenta: {
     color: "#1b94ce",
-    fontFamily: "Roboto",
+    fontFamily: "System",
     fontSize: 15,
   },
   txto: {

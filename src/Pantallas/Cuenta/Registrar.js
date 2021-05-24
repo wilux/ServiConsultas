@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   textobaner: {
-    fontFamily: "Roboto",
+    fontFamily: "System",
     fontWeight: "bold",
     fontSize: 30,
     color: "#fff",

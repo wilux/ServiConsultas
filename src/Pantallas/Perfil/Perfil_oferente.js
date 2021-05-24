@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { View, Text, TextInput, StyleSheet, StatusBar } from "react-native";
 import { Avatar, CheckBox, Button, Overlay } from "react-native-elements";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { cargarImagenesxAspecto, validaremail } from "../../Utils/Utils";
 import {
   subirImagenesBatch,
   ObtenerUsuario,
-  ListarMiPerfil,
   addRegistroEspecifico,
   actualilzarPerfil,
   enviarconfirmacionphone,
@@ -25,15 +24,12 @@ export default function Perfil() {
   const [imagenperfil, setimagenperfil] = useState("");
   const [loading, setloading] = useState(false);
   const usuario = ObtenerUsuario();
-  const perfil = ListarMiPerfil();
   const [displayName, setdisplayName] = useState("");
   const [phoneNumber, setphoneNumber] = useState("");
-  const [proveedor, setProveedor] = useState("");
   const [email, setemail] = useState("");
   const [editablename, seteditablename] = useState(false);
   const [editableemail, seteditableemail] = useState(false);
   const [editablephone, seteditablephone] = useState(false);
-  const [checked, setCheck] = useState(false);
   const [verificationid, setverificationid] = useState("");
   const [isVisible, setisVisible] = useState(false);
 
@@ -47,12 +43,10 @@ export default function Perfil() {
 
   useEffect(() => {
     setimagenperfil(usuario.photoURL);
-    const { displayName, phoneNumber, email, proveedor } = usuario;
+    const { displayName, phoneNumber, email } = usuario;
     setdisplayName(displayName);
     setphoneNumber(phoneNumber);
-    setProveedor(proveedor);
     setemail(email);
-    setCheck(perfil);
   }, []);
 
   const onChangeInput = (input, valor) => {
@@ -86,10 +80,6 @@ export default function Perfil() {
   const guardarCambios = () => {
     // addRegistroEspecifico("Usuarios", usuario.uid, { proveedor: checked });
     console.log("Guardar ");
-    // console.log("User infio: " + usuario.proveedor);
-    console.log(usuario.proveedor);
-    console.log(perfil);
-    //console.log(usuario.uid);
   };
 
   const actualizarValor = async (input, valor) => {
@@ -162,60 +152,53 @@ export default function Perfil() {
           styles={{
             backgroundColor: "red",
           }}
-        >
-          <CheckBox
-            center
-            title="¿Es Proveedor?"
-            checked={checked}
-            onPress={() => setCheck(!checked)}
-          />
-        </View>
+        ></View>
 
         <View>
-          <Overlay
+          {/* <Overlay
             fullScreen={true}
             isVisible={visible}
             onBackdropPress={toggleOverlay}
-          >
-            <Text style={styles.titulomodal}>Gestion de Turnos</Text>
-            <Calendar
-              style={styles.calendario}
-              current={Date()}
-              minDate={Date()}
-              onDayPress={(day) => {
-                console.log("selected day", day),
-                  { toggleOverlay2 },
-                  { toggleOverlay };
-              }}
-              markedDates={{
-                "2021-05-16": {
-                  selected: true,
-                  marked: true,
-                  selectedColor: "red",
-                },
-                "2021-05-17": {
-                  selected: true,
-                  marked: true,
-                  selectedColor: "green",
-                },
-                "2021-05-18": {
-                  selected: true,
-                  marked: true,
-                  selectedColor: "green",
-                },
-                "2021-05-10": {
-                  selected: true,
-                  marked: true,
-                  selectedColor: "red",
-                },
-                "2021-05-21": {
-                  selected: true,
-                  marked: true,
-                  selectedColor: "green",
-                },
-              }}
-            ></Calendar>
-          </Overlay>
+          > */}
+          <Text style={styles.titulomodal}>Gestion de Turnos</Text>
+          {/* <Calendar
+            style={styles.calendario}
+            current={Date()}
+            minDate={Date()}
+            onDayPress={(day) => {
+              console.log("selected day", day);
+
+              // { toggleOverlay };
+            }}
+            markedDates={{
+              "2021-05-16": {
+                selected: true,
+                marked: true,
+                selectedColor: "red",
+              },
+              "2021-05-17": {
+                selected: true,
+                marked: true,
+                selectedColor: "green",
+              },
+              "2021-05-18": {
+                selected: true,
+                marked: true,
+                selectedColor: "green",
+              },
+              "2021-05-10": {
+                selected: true,
+                marked: true,
+                selectedColor: "red",
+              },
+              "2021-05-21": {
+                selected: true,
+                marked: true,
+                selectedColor: "green",
+              },
+            }}
+          ></Calendar> */}
+          {/* </Overlay> */}
         </View>
       </View>
       <FormDatos
@@ -228,13 +211,10 @@ export default function Perfil() {
         seteditablephone={seteditablephone}
         seteditablename={seteditablename}
         actualizarValor={actualizarValor}
-        checked={checked}
-        setCheck={setCheck}
         guardarCambios={guardarCambios}
       />
       <Text style={styles.label}>Mi disponibilidad</Text>
       <Button
-        isVisible={checked}
         buttonStyle={styles.btn_turnos}
         title="Gestionar turnos"
         onPress={() => {
@@ -363,12 +343,8 @@ function FormDatos(props) {
 }
 
 function ModalVerification(props) {
-  const {
-    isVisibleModal,
-    setisVisibleModal,
-    ConfirmarCodigo,
-    verificationid,
-  } = props;
+  const { isVisibleModal, setisVisibleModal, ConfirmarCodigo, verificationid } =
+    props;
 
   return (
     <Modal isVisible={isVisibleModal} setIsVisible={setisVisibleModal}>
@@ -377,7 +353,7 @@ function ModalVerification(props) {
         <Text style={styles.detalle}>
           Se ha enviado un código de verificación a su número de teléfono
         </Text>
-
+        inputComponent={() => TextInput}
         <CodeInput
           secureTextEntry
           activeColor="#1b94ce"
@@ -385,6 +361,7 @@ function ModalVerification(props) {
           autoFocus={false}
           inputPosition="center"
           size={40}
+          inputComponent={() => TextInput}
           containerStyle={{ marginTop: 30 }}
           codeInputStyle={{ borderWidth: 1.5 }}
           codeLength={6}

@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
   },
   txtlabel: {
     fontSize: 20,
-    fontFamily: "Roboto",
+    fontFamily: "System",
     textAlign: "center",
     fontWeight: "bold",
     color: "#075e54",

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "bold",
     fontSize: 16,
-    fontFamily: "Roboto",
+    fontFamily: "System",
     color: "#fff",
   },
   rowicon: {

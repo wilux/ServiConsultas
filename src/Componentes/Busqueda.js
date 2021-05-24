@@ -37,7 +37,7 @@ export default function Busqueda(props) {
         backgroundColor: "#fff",
         alignItems: "center",
       }}
-      inputStyle={{ fontFamily: "Roboto", fontSize: 20 }}
+      inputStyle={{ fontFamily: "System", fontSize: 20 }}
       onChangeText={(text) => {
         setsearch(text);
       }}

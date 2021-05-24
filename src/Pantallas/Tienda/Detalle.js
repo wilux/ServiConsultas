@@ -210,6 +210,7 @@ export default function Detalle(props) {
     return (
       <ScrollView style={styles.container}>
         <Carousel
+          data={null}
           imagenes={producto.imagenes}
           height={200}
           width={Dimensions.get("window").width}

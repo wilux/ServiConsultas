@@ -10,8 +10,6 @@ import TiendaStack from "./TiendaStack";
 import PerfilStack from "./PerfilStack";
 import MiTienda from "./MiTiendaStack";
 
-//aquí importaremos algunos componentes más tarde.
-
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
