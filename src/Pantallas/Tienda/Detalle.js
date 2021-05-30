@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   Dimensions,
+  StatusBar,
   ScrollView,
   Alert,
 } from "react-native";
@@ -12,6 +13,7 @@ import {
   obternerRegistroxID,
   ObtenerUsuario,
   sendPushNotification,
+  ListarSusTurnos,
   setMensajeNotificacion,
   addRegistro,
 } from "../../Utils/Acciones";
@@ -20,7 +22,7 @@ import { size } from "lodash";
 import Loading from "../../Componentes/Loading";
 import Carousel from "../../Componentes/Carousel";
 import Modal from "../../Componentes/Modal";
-import { Calendar } from "react-native-calendars";
+import { Calendar } from "react-native-big-calendar";
 
 export default function Detalle(props) {
   const { route } = props;
@@ -38,30 +40,16 @@ export default function Detalle(props) {
   const [isVisible, setisvisible] = useState(false);
   const usuarioactual = ObtenerUsuario();
 
-  let DiasDisponibles = {};
+  const [events, setEvents] = useState([
+    {
+      title: "ejemplo",
+      start: new Date(2021, 1, 30, 10, 0),
+      end: new Date(2021, 1, 30, 10, 30),
+    },
+  ]);
 
-  // const pintarCalendario = () => {
-  //   var date = [];
-  //   var arrayOfDates = ["2021-05-06", "2021-05-25", "2021-05-12"];
-
-  //   for (let index = 0; index < arrayOfDates.length; index++) {
-  //     const element = arrayOfDates[index];
-  //     const estructura = {
-  //       [element]: {
-  //         selected: true,
-  //         marked: true,
-  //         selectedColor: "blue",
-  //       },
-  //     };
-
-  //     date.push(estructura);
-  //     DiasDisponibles = Object.values(date);
-  //     console.log(DiasDisponibles);
-  //   }
-  // };
-
-  console.log(id);
-  console.log(titulo);
+  // console.log(id);
+  // console.log(titulo);
 
   useEffect(() => {
     (async () => {
@@ -80,7 +68,7 @@ export default function Detalle(props) {
         setnombrevendedor(resultado.displayName);
         setphotovendedor(resultado.photoURL);
         setphonenumber(resultado.phoneNumber);
-        //pintarCalendario();
+        setEvents(await ListarSusTurnos(producto.usuario));
       }
     })();
   }, [producto]);
@@ -209,15 +197,16 @@ export default function Detalle(props) {
   if (producto.lenght !== 0) {
     return (
       <ScrollView style={styles.container}>
-        <Carousel
+        <StatusBar backgroundColor="#1b94ce" />
+        {/* <Carousel
           data={null}
           imagenes={producto.imagenes}
           height={200}
           width={Dimensions.get("window").width}
           activeslide={activeslide}
           setactiveslide={setactiveslide}
-        />
-        <View style={styles.boxsuperior}>
+        /> */}
+        <View>
           <View
             style={{
               borderBottomColor: "#25D366",
@@ -238,51 +227,26 @@ export default function Detalle(props) {
 
           <Text style={styles.subtitulo}>Disponibilidad del proveedor</Text>
           {/* Esto debe completarse dinamicamente segun la ocupacion del proveedor */}
-          <Calendar
-            style={{
-              borderWidth: 1,
-              borderColor: "blue",
-              height: 350,
-            }}
-            disabledByDefault
-            disableAllTouchEventsForDisabledDays={true}
-            onDayPress={(day) => {
-              const mensajewhatsapp = `Estimado ${nombrevendedor}, mi nombre es ${usuarioactual.displayName}  me interesa el producto ${producto.titulo} que está en WhatsCommerce`;
-              enviarWhatsapp(phonenumber, mensajewhatsapp);
-            }}
-            markedDates={{
-              "2021-05-16": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-                disabled: false,
-              },
-              "2021-05-17": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-                disabled: false,
-              },
-              "2021-05-18": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-                disabled: false,
-              },
-              "2021-05-10": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-                disabled: false,
-              },
-              "2021-05-21": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-                disabled: false,
-              },
-            }}
-          ></Calendar>
+          <View>
+            <Calendar
+              //eventCellStyle={{ backgroundColor: "green" }}
+              eventCellStyle={(event) => {
+                const backgroundColor = event.estado ? "green" : "red";
+                console.log(event);
+                return { backgroundColor };
+              }}
+              events={events}
+              height={400}
+              startAccessor="start"
+              endAccessor="end"
+              // onPressCell={(date) => handleConfirm(date)}
+              onPressEvent={(e) =>
+                e.estado
+                  ? console.log("Quiero usar el turno: " + e.id)
+                  : console.log("El turno esta ocupado")
+              }
+            />
+          </View>
 
           <Text style={styles.titulos}>Contactar al Anunciante</Text>
           <View style={styles.avatarbox}>
@@ -362,18 +326,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginTop: 10,
+    textAlign: "center",
   },
   subtitulo: {
     color: "#000",
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 10,
+    textAlign: "center",
   },
   precio: {
     fontSize: 18,
     color: "#1b94ce",
     fontWeight: "bold",
     paddingLeft: 10,
+    textAlign: "center",
   },
   descripcion: {
     fontWeight: "300",
@@ -385,10 +352,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   avatarbox: {
-    flexDirection: "row",
+    flexDirection: "row-reverse",
     alignItems: "center",
     marginBottom: 40,
     flex: 1,
+    flexWrap: "wrap",
   },
   avatar: {
     width: 60,

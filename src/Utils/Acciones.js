@@ -154,6 +154,81 @@ export const ListarMisProductos = async () => {
   return productos;
 };
 
+export const ListarMisTurnos = async () => {
+  let turnos = [];
+
+  let turnosFormat = [];
+
+  await db
+    .collection("Turnos")
+    .where("usuario", "==", ObtenerUsuario().uid)
+    // .where("status", "==", 0)
+    .get()
+    .then((response) => {
+      response.forEach((doc) => {
+        const turno = doc.data();
+        turno.id = doc.id;
+        turnos.push(turno);
+      });
+    })
+    .catch((err) => {
+      console.log("error");
+    });
+
+  for (const { id: i, title: t, start: s, end: e } of turnos) {
+    let myNewArray = {
+      id: i,
+      title: t,
+      start: s,
+      end: e,
+    };
+
+    turnosFormat.push(myNewArray);
+  }
+
+  //console.log(turnosFormat);
+
+  return turnosFormat;
+};
+
+export const ListarSusTurnos = async (proveedor) => {
+  let turnos = [];
+
+  let turnosFormat = [];
+
+  await db
+    .collection("Turnos")
+    .where("usuario", "==", proveedor)
+    //.where("estado", "==", true)
+    .get()
+    .then((response) => {
+      response.forEach((doc) => {
+        const turno = doc.data();
+        turno.id = doc.id;
+        turnos.push(turno);
+      });
+    })
+    .catch((err) => {
+      console.log("error");
+    });
+
+  for (const { id: i, estado: z, title: t, start: s, end: e } of turnos) {
+    let myNewArray = {
+      id: i,
+      estado: z,
+      title: t,
+      start: s,
+      end: e,
+    };
+
+    turnosFormat.push(myNewArray);
+  }
+
+  //console.log(turnosFormat);
+
+  return turnosFormat;
+};
+
 export const addRegistroEspecifico = async (coleccion, doc, data) => {
   const resultado = { error: "", statusreponse: false };
 
@@ -274,6 +349,42 @@ export const eliminarProducto = async (coleccion, documento) => {
     .doc(documento)
     .delete()
     .then((result) => (response.statusresponse = true))
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return response;
+};
+
+export const eliminarTurno = async (coleccion, documento) => {
+  let response = { statusresponse: false };
+
+  await db
+    .collection(coleccion)
+    .doc(documento)
+    .delete()
+
+    .then((result) => (response.statusresponse = true))
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return response;
+};
+
+export const eliminarTodosTurno = async () => {
+  let response = { statusresponse: false };
+  let turnos = [];
+
+  await db
+    .collection("Turnos")
+    .where("usuario", "==", ObtenerUsuario().uid)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.docs.forEach((snapshot) => {
+        snapshot.ref.delete();
+      });
+    })
     .catch((err) => {
       console.log(err);
     });

@@ -17,7 +17,6 @@ import InputEditable from "../../Componentes/InputEditable";
 import Modal from "../../Componentes/Modal";
 import CodeInput from "react-native-code-input";
 import FirebaseRecapcha from "../../Utils/FirebaseRecapcha";
-import { Calendar } from "react-native-calendars";
 
 export default function Perfil() {
   const navigation = useNavigation();
@@ -137,6 +136,21 @@ export default function Perfil() {
     }
   };
 
+  const events = [
+    {
+      title: "Meeting",
+      start: new Date(2021, 5, 25, 10, 0),
+      end: new Date(2021, 5, 25, 10, 30),
+      allDay: "false",
+    },
+    {
+      title: "Coffee break",
+      start: new Date(2021, 5, 25, 15, 45),
+      end: new Date(2021, 5, 25, 16, 30),
+      allDay: "false",
+    },
+  ];
+
   return (
     <View>
       <StatusBar backgroundColor="#1b94ce" />
@@ -153,53 +167,6 @@ export default function Perfil() {
             backgroundColor: "red",
           }}
         ></View>
-
-        <View>
-          {/* <Overlay
-            fullScreen={true}
-            isVisible={visible}
-            onBackdropPress={toggleOverlay}
-          > */}
-          <Text style={styles.titulomodal}>Gestion de Turnos</Text>
-          {/* <Calendar
-            style={styles.calendario}
-            current={Date()}
-            minDate={Date()}
-            onDayPress={(day) => {
-              console.log("selected day", day);
-
-              // { toggleOverlay };
-            }}
-            markedDates={{
-              "2021-05-16": {
-                selected: true,
-                marked: true,
-                selectedColor: "red",
-              },
-              "2021-05-17": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-              },
-              "2021-05-18": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-              },
-              "2021-05-10": {
-                selected: true,
-                marked: true,
-                selectedColor: "red",
-              },
-              "2021-05-21": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-              },
-            }}
-          ></Calendar> */}
-          {/* </Overlay> */}
-        </View>
       </View>
       <FormDatos
         onChangeInput={onChangeInput}
@@ -227,6 +194,7 @@ export default function Perfil() {
         buttonStyle={styles.btn_guardar}
         onPress={() => guardarCambios()}
       />
+
       <ModalVerification
         isVisibleModal={isVisible}
         setisVisibleModal={setisVisible}

@@ -1,36 +1,112 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, StyleSheet, StatusBar } from "react-native";
-import { Avatar, CheckBox, Button, Overlay } from "react-native-elements";
-
-import { ObtenerUsuario, addRegistroEspecifico } from "../../Utils/Acciones";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, StyleSheet, StatusBar, Alert } from "react-native";
+import { Button } from "react-native-elements";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { Calendar } from "react-native-big-calendar";
+import {
+  ObtenerUsuario,
+  addRegistro,
+  eliminarTodosTurno,
+  eliminarTurno,
+  ListarMisTurnos,
+} from "../../Utils/Acciones";
 import Loading from "../../Componentes/Loading";
-import Modal from "../../Componentes/Modal";
-import { Calendar } from "react-native-calendars";
 
 export default function Turno() {
   const [loading, setloading] = useState(false);
+  const [events, setEvents] = useState([
+    {
+      title: "ejemplo",
+      start: new Date(2021, 1, 30, 10, 0),
+      end: new Date(2021, 1, 30, 10, 30),
+    },
+  ]);
+  const [turnos, setTurnos] = useState(null);
+  const [turnosnube, setTurnosNube] = useState([]);
   const usuario = ObtenerUsuario();
-  const [displayName, setdisplayName] = useState("");
-  const [checked, setCheck] = useState(false);
-  const [isVisible, setisVisible] = useState(false);
-  const [visible, setVisible] = useState(false);
-
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
 
   useEffect(() => {
-    const { displayName, phoneNumber, email } = usuario;
-    setCheck(checked);
+    (async () => {
+      setEvents(await ListarMisTurnos());
+    })();
   }, []);
 
-  const guardarCambios = () => {
-    addRegistroEspecifico("Usuarios", usuario.uid, { proveedor: checked });
+  // const actulizarTurnos = async () => {
+  //   setEvents(await ListarMisTurnos());
+  //   console.log(events);
+  //   //console.log(map)
+  //   //guardarCambios();
+  // };
+
+  const borrar_Turnos = async () => {
+    console.log("Borrando turnos...");
+    await eliminarTodosTurno("Turnos");
+    setTurnos(await ListarMisTurnos());
   };
+
+  const AgregarTurno = async (date) => {
+    console.log("A date has been picked: ", date);
+
+    const title = "Turno de las " + date.getHours();
+
+    setTurnos((turnos) => ({
+      ...turnos,
+      usuario: ObtenerUsuario().uid,
+      estado: true,
+      title: title,
+      start: date.toString(),
+      end: date.toString(),
+      fechacreacion: new Date().toString(),
+    }));
+
+    if (turnos !== null) {
+      setloading(true);
+      console.log(turnos);
+      const registrarFecha = await addRegistro("Turnos", turnos);
+      if (registrarFecha.statusreponse) {
+        setloading(false);
+        //Alert.alert("Registro Exitoso", "El turno se habilito exitosamente");
+        console.log("Registro Exitoso", "El turno se habilito exitosamente");
+        setEvents(await ListarMisTurnos());
+      } else {
+        setloading(false);
+        //Alert.alert("Registro Fallido", "El turno se guardo, vuelva a intentar");
+        console.log("Registro Fallido");
+        setEvents(await ListarMisTurnos());
+      }
+    } else {
+      setEvents(await ListarMisTurnos());
+      console.log("Es null");
+      console.log(turnos);
+    }
+  };
+
+  const borrarTurno = async (e) => {
+    await eliminarTurno("Turnos", e.id);
+    setEvents(await ListarMisTurnos());
+  };
+
+  // const guardarCambios = async () => {
+  //   if (turnos !== null) {
+  //     setloading(true);
+  //     const registrarFecha = await addRegistro("Turnos", turnos);
+  //     if (registrarFecha.statusreponse) {
+  //       setloading(false);
+  //       //Alert.alert("Registro Exitoso", "El turno se habilito exitosamente");
+  //       console.log("Registro Exitoso", "El turno se habilito exitosamente");
+  //     } else {
+  //       setloading(false);
+  //       //Alert.alert("Registro Fallido", "El turno se guardo, vuelva a intentar");
+  //       console.log("Registro Fallido");
+  //     }
+  //   } else {
+  //     console.log("Es null");
+  //     console.log(turnos);
+  //   }
+  // };
 
   function CabeceraBG(props) {
     const { nombre } = props;
-    //console.log(nombre);
     return (
       <View>
         <View style={styles.bg}>
@@ -46,57 +122,54 @@ export default function Turno() {
     <View>
       <StatusBar backgroundColor="#1b94ce" />
       <CabeceraBG nombre={"Gestión de Turnos"} />
-
+      {/* {events.length > 0 ? ( */}
       <View
         styles={{
           backgroundColor: "red",
         }}
       >
-        <View>
-          <Calendar
-            style={styles.calendario}
-            current={Date()}
-            minDate={Date()}
-            onDayPress={(day) => {
-              console.log("selected day", day),
-                { toggleOverlay2 },
-                { toggleOverlay };
-            }}
-            markedDates={{
-              "2021-05-16": {
-                selected: true,
-                marked: true,
-                selectedColor: "red",
-              },
-              "2021-05-17": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-              },
-              "2021-05-18": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-              },
-              "2021-05-10": {
-                selected: true,
-                marked: true,
-                selectedColor: "red",
-              },
-              "2021-05-21": {
-                selected: true,
-                marked: true,
-                selectedColor: "green",
-              },
-            }}
-          ></Calendar>
-        </View>
+        <Calendar
+          eventCellStyle={{ backgroundColor: "green" }}
+          events={events}
+          height={500}
+          startAccessor="start"
+          endAccessor="end"
+          onPressCell={(date) => AgregarTurno(date)}
+          onPressEvent={(e) => borrarTurno(e)}
+
+          // onPressEvent={(e) => {
+          //   Alert.alert(
+          //     "Eliminar Turno",
+          //     "¿Estás seguro que deseas eliminar el turno",
+          //     [
+          //       {
+          //         style: "default",
+          //         text: "Confirmar",
+          //         onPressEvent: async (e) => {
+          //           console.log(e.id);
+          //           setTurnos(await ListarMisTurnos());
+          //         },
+          //       },
+          //       {
+          //         style: "default",
+          //         text: "Salir",
+          //       },
+          //     ]
+          //   );
+          // }}
+        />
       </View>
 
-      <Button
-        title="Guardar"
+      {/* <Button
+        title="Actualizar Turnos"
         buttonStyle={styles.btn_turnos}
-        onPress={() => console.log("Guardar")}
+        onPress={actulizarTurnos}
+      /> */}
+
+      <Button
+        title="Borrar Todo"
+        buttonStyle={styles.btn_borrar}
+        onPress={borrar_Turnos}
       />
 
       <Loading isVisible={loading} text="Favor espere" />
@@ -114,48 +187,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  avatarinline: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 0,
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-  },
-  confirmacion: {
-    height: 200,
-    width: "100%",
-    alignItems: "center",
-  },
-  titulomodal: {
-    fontWeight: "bold",
-    fontSize: 18,
-    marginTop: 20,
-  },
-  detalle: {
-    marginTop: 20,
-    fontSize: 14,
-    textAlign: "center",
-  },
-  label: {
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#1b94ce",
-    fontSize: 16,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  calendario: {
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
-  },
   btn_turnos: {
-    marginTop: 30,
+    marginTop: 10,
     marginBottom: 30,
     width: 230,
     backgroundColor: "green",
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+  btn_borrar: {
+    marginTop: 10,
+    marginBottom: 30,
+    width: 230,
+    backgroundColor: "red",
     borderRadius: 10,
     alignSelf: "center",
   },
