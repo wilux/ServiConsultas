@@ -58,13 +58,8 @@ export default function MensajesList() {
 function Notificacion(props) {
   const { notificacion, navigation } = props;
 
-  const {
-    mensaje,
-    fechacreacion,
-    sender,
-    id,
-    productotitulo,
-  } = notificacion.item;
+  const { mensaje, fechacreacion, sender, idTurno, productotitulo } =
+    notificacion.item;
 
   const { displayName, photoURL, phoneNumber, email } = sender;
 
@@ -76,6 +71,8 @@ function Notificacion(props) {
           phoneNumber,
           photoURL,
           email,
+          mensaje,
+          idTurno,
         });
       }}
     >
@@ -97,9 +94,9 @@ function Notificacion(props) {
             {displayName}
             <Text style={{ fontWeight: "normal" }}>
               {" "}
-              te ha enviado un mensaje para el producto{" "}
+              ha solicitado un turno para el {mensaje}, id: {idTurno}
             </Text>
-            <Text style={{ fontWeight: "bold" }}> {productotitulo}</Text> -{" "}
+            <Text style={{ fontWeight: "bold" }}> de {productotitulo}</Text> -{" "}
             {moment(fechacreacion.toDate()).startOf("hour").fromNow()}
           </Text>
         </View>
@@ -113,7 +110,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 20,
     paddingLeft: 10,
-    paddingRight: 40,
+    paddingRight: 60,
     borderBottomColor: "#bdbdbd",
     borderBottomWidth: 1,
     alignItems: "center",

@@ -39,7 +39,7 @@ export default function TiendaStack() {
         component={Contacto}
         name="contacto"
         options={{
-          title: "Contácto",
+          title: "Confirmación de Turno",
           headerStyle: { backgroundColor: "#1b94ce" },
           headerTintColor: "#fff",
         }}

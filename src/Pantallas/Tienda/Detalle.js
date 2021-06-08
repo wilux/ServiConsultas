@@ -34,6 +34,8 @@ export default function Detalle(props) {
   const [photovendedor, setphotovendedor] = useState("");
   const [phonenumber, setphonenumber] = useState("");
   const [mensaje, setmensaje] = useState("");
+  const [idTurno, setIdTurno] = useState("");
+  const [turnoSeleccionado, setturnoSeleccionado] = useState("");
 
   const [activeslide, setactiveslide] = useState(0);
   const [loading, setloading] = useState(false);
@@ -91,12 +93,13 @@ export default function Detalle(props) {
 
     const enviarNotificacion = async () => {
       if (!mensaje) {
-        Alert.alert("Validación", "Favor introduce un texto para el mensaje", [
+        Alert.alert("Validación", "Favor seleccionar un turno para confirmar", [
           {
             style: "default",
             text: "Entendido",
           },
         ]);
+        setisvisible(false);
       } else {
         setloading(true);
         const notificacion = {
@@ -105,6 +108,7 @@ export default function Detalle(props) {
           mensaje,
           fechacreacion: new Date(),
           productoid: producto.id,
+          idTurno: idTurno,
           productotitulo: producto.titulo,
           visto: 0,
         };
@@ -114,17 +118,18 @@ export default function Detalle(props) {
           const mensajenotificacion = setMensajeNotificacion(
             token,
             `Cliente Interesado - ${producto.titulo}`,
-            `${nombrecliente}, te ha enviado un mensaje`,
+            `${nombrecliente}, te ha enviado una solicitud de turno`,
             { data: "Prospecto Interesado" }
           );
 
           const respuesta = await sendPushNotification(mensajenotificacion);
           setloading(false);
+          setisvisible(false);
 
           if (respuesta) {
             Alert.alert(
               "Acción realizada correctamente",
-              "Se ha enviado el mensaje correctamente",
+              `Se ha enviado la solicitud correctamente. Debe aguardar la aceptación por parte de ${nombrevendedor}`,
               [
                 {
                   style: "cancel",
@@ -137,7 +142,7 @@ export default function Detalle(props) {
           } else {
             Alert.alert(
               "Error",
-              "Se ha producido un error al enviar mensaje, favor intentelo nuevamente  ",
+              "Se ha producido un error al enviar la solicitud, favor intentelo nuevamente  ",
               [
                 {
                   style: "cancel",
@@ -170,24 +175,31 @@ export default function Detalle(props) {
             style={styles.photovendor}
           />
 
-          <Text style={{ color: "#075e54", fontSize: 16, fontWeight: "bold" }}>
-            Envíale un mensaje a {nombrevendedor}
+          <Text style={{ color: "#075e54", fontSize: 18, fontWeight: "bold" }}>
+            Estas solicitando un turno con {nombrevendedor}.
           </Text>
 
           <Input
-            placeholder="Escribe un mensaje"
+            // placeholder="Deja un mensaje"
             multiline={true}
             inputStyle={styles.textArea}
-            onChangeText={(text) => {
-              setmensaje(text);
-            }}
-            value={mensaje}
+            // onChangeText={(text) => {
+            //   setmensaje(text);
+            // }}
+            editable={false}
+            value={"Turno: " + mensaje}
           />
           <Button
-            title="Enviar mensaje"
+            title="Enviar solicitud"
             buttonStyle={styles.btnsend}
             containerStyle={{ width: "90%" }}
             onPress={enviarNotificacion}
+          />
+          <Button
+            title="Cancelar"
+            buttonStyle={styles.btncerrar}
+            containerStyle={{ width: "90%" }}
+            onPress={() => setisvisible(false)}
           />
         </View>
       </Modal>
@@ -207,24 +219,30 @@ export default function Detalle(props) {
           setactiveslide={setactiveslide}
         /> */}
         <View>
-          <View
-            style={{
-              borderBottomColor: "#25D366",
-              borderBottomWidth: 2,
-              width: 100,
-              alignSelf: "center",
-            }}
-          />
-          <Text style={styles.titulos}>{producto.titulo}</Text>
-          <Text style={styles.precio}>
-            ${parseFloat(producto.precio).toFixed(2)}
-          </Text>
-
-          <View>
-            <Text style={styles.descripcion}>{producto.descripcion}</Text>
-            <Rating imageSize={20} startingValue={producto.rating} readonly />
+          <View style={styles.avatarbox}>
+            <Avatar
+              source={
+                photovendedor
+                  ? { uri: photovendedor }
+                  : require("../../../assets/avatar.jpg")
+              }
+              //  containerStyle={{ flex: 1, marginLeft: 300, marginTop: 20 }}
+              size="large"
+              rounded
+            />
           </View>
 
+          <View style={styles.boxTop}>
+            <Text style={styles.titulos}>{producto.titulo}</Text>
+            <Text style={styles.precio}>
+              ${parseFloat(producto.precio).toFixed(2)}
+            </Text>
+
+            <View>
+              <Text style={styles.descripcion}>{producto.descripcion}</Text>
+              <Rating imageSize={20} startingValue={producto.rating} readonly />
+            </View>
+          </View>
           <Text style={styles.subtitulo}>Disponibilidad del proveedor</Text>
           {/* Esto debe completarse dinamicamente segun la ocupacion del proveedor */}
           <View>
@@ -236,57 +254,38 @@ export default function Detalle(props) {
                 return { backgroundColor };
               }}
               events={events}
-              height={400}
+              height={550}
               startAccessor="start"
               endAccessor="end"
               // onPressCell={(date) => handleConfirm(date)}
               onPressEvent={(e) =>
                 e.estado
-                  ? console.log("Quiero usar el turno: " + e.id)
-                  : console.log("El turno esta ocupado")
+                  ? setmensaje(
+                      e.start.getDate() +
+                        "/" +
+                        e.start.getMonth() +
+                        "/" +
+                        e.start.getFullYear() +
+                        " a las " +
+                        e.start.getHours() +
+                        " horas"
+                    ) &
+                    setisvisible(true) &
+                    setIdTurno(e.id)
+                  : Alert.alert(
+                      "¡Atención!",
+                      "El día y horario seleccionado no esta disponible. ",
+                      [
+                        {
+                          style: "cancel",
+                          text: "Entendido",
+                        },
+                      ]
+                    )
               }
             />
           </View>
 
-          <Text style={styles.titulos}>Contactar al Anunciante</Text>
-          <View style={styles.avatarbox}>
-            <Avatar
-              source={
-                photovendedor
-                  ? { uri: photovendedor }
-                  : require("../../../assets/avatar.jpg")
-              }
-              style={styles.avatar}
-              rounded
-              size="large"
-            />
-            <View>
-              <Text style={styles.displayname}>
-                {nombrevendedor ? nombrevendedor : "Anónimo"}
-              </Text>
-              <View style={styles.boxinternoavatar}>
-                <Icon
-                  type="material-community"
-                  name="message-text-outline"
-                  color="#25d366"
-                  size={40}
-                  onPress={() => {
-                    setisvisible(true);
-                  }}
-                />
-                <Icon
-                  type="material-community"
-                  name="whatsapp"
-                  color="#25d366"
-                  size={40}
-                  onPress={() => {
-                    const mensajewhatsapp = `Estimado ${nombrevendedor}, mi nombre es ${usuarioactual.displayName}  me interesa el producto ${producto.titulo} que está en WhatsCommerce`;
-                    enviarWhatsapp(phonenumber, mensajewhatsapp);
-                  }}
-                />
-              </View>
-            </View>
-          </View>
           <EnviarMensaje
             isVisible={isVisible}
             setisVisible={setisvisible}
@@ -301,7 +300,7 @@ export default function Detalle(props) {
             setloading={setloading}
             nombrecliente={usuarioactual.displayName}
           />
-          <Loading isVisible={loading} text="Enviando el mensaje..." />
+          <Loading isVisible={loading} text="Enviando solicitud..." />
         </View>
       </ScrollView>
     );
@@ -326,6 +325,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginTop: 10,
+    marginRight: 20,
     textAlign: "center",
   },
   subtitulo: {
@@ -336,6 +336,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   precio: {
+    marginBottom: -12,
     fontSize: 18,
     color: "#1b94ce",
     fontWeight: "bold",
@@ -351,12 +352,16 @@ const styles = StyleSheet.create({
     color: "#757575",
     textAlign: "center",
   },
-  avatarbox: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    marginBottom: 40,
+
+  boxTop: {
     flex: 1,
-    flexWrap: "wrap",
+    marginTop: -70,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  avatarbox: {
+    alignItems: "flex-end",
   },
   avatar: {
     width: 60,
@@ -373,8 +378,8 @@ const styles = StyleSheet.create({
     color: "#075E54",
   },
   photovendor: {
-    width: 60,
-    height: 60,
+    width: 90,
+    height: 90,
     alignSelf: "center",
     marginTop: 20,
     marginBottom: 20,
@@ -384,5 +389,9 @@ const styles = StyleSheet.create({
   },
   btnsend: {
     backgroundColor: "#075e54",
+  },
+  btncerrar: {
+    marginTop: 20,
+    backgroundColor: "red",
   },
 });

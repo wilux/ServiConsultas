@@ -162,7 +162,6 @@ export const ListarMisTurnos = async () => {
   await db
     .collection("Turnos")
     .where("usuario", "==", ObtenerUsuario().uid)
-    // .where("status", "==", 0)
     .get()
     .then((response) => {
       response.forEach((doc) => {
@@ -175,9 +174,10 @@ export const ListarMisTurnos = async () => {
       console.log("error");
     });
 
-  for (const { id: i, title: t, start: s, end: e } of turnos) {
+  for (const { id: i, estado: z, title: t, start: s, end: e } of turnos) {
     let myNewArray = {
       id: i,
+      estado: z,
       title: t,
       start: s,
       end: e,
@@ -185,8 +185,6 @@ export const ListarMisTurnos = async () => {
 
     turnosFormat.push(myNewArray);
   }
-
-  //console.log(turnosFormat);
 
   return turnosFormat;
 };
@@ -199,7 +197,6 @@ export const ListarSusTurnos = async (proveedor) => {
   await db
     .collection("Turnos")
     .where("usuario", "==", proveedor)
-    //.where("estado", "==", true)
     .get()
     .then((response) => {
       response.forEach((doc) => {
@@ -379,6 +376,7 @@ export const eliminarTodosTurno = async () => {
   await db
     .collection("Turnos")
     .where("usuario", "==", ObtenerUsuario().uid)
+    .where("estado", "==", true)
     .get()
     .then((querySnapshot) => {
       querySnapshot.docs.forEach((snapshot) => {

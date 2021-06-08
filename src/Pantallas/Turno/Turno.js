@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet, StatusBar, Alert } from "react-native";
 import { Button } from "react-native-elements";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { Calendar } from "react-native-big-calendar";
 import {
   ObtenerUsuario,
@@ -21,8 +20,22 @@ export default function Turno() {
       end: new Date(2021, 1, 30, 10, 30),
     },
   ]);
-  const [turnos, setTurnos] = useState(null);
-  const [turnosnube, setTurnosNube] = useState([]);
+  const [turnos, setTurnos] = useState({});
+  const mes = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
   const usuario = ObtenerUsuario();
 
   useEffect(() => {
@@ -31,13 +44,6 @@ export default function Turno() {
     })();
   }, []);
 
-  // const actulizarTurnos = async () => {
-  //   setEvents(await ListarMisTurnos());
-  //   console.log(events);
-  //   //console.log(map)
-  //   //guardarCambios();
-  // };
-
   const borrar_Turnos = async () => {
     console.log("Borrando turnos...");
     await eliminarTodosTurno("Turnos");
@@ -45,38 +51,45 @@ export default function Turno() {
   };
 
   const AgregarTurno = async (date) => {
-    console.log("A date has been picked: ", date);
-
     const title = "Turno de las " + date.getHours();
 
-    setTurnos((turnos) => ({
-      ...turnos,
-      usuario: ObtenerUsuario().uid,
-      estado: true,
-      title: title,
-      start: date.toString(),
-      end: date.toString(),
-      fechacreacion: new Date().toString(),
-    }));
-
-    if (turnos !== null) {
+    if (Object.keys(turnos).length !== 0) {
       setloading(true);
-      console.log(turnos);
+
+      setTurnos((turnos) => ({
+        ...turnos,
+        usuario: ObtenerUsuario().uid,
+        estado: true,
+        title: title,
+        start: date.toString(),
+        end: date.toString(),
+        fechacreacion: new Date().toString(),
+      }));
+
       const registrarFecha = await addRegistro("Turnos", turnos);
       if (registrarFecha.statusreponse) {
         setloading(false);
-        //Alert.alert("Registro Exitoso", "El turno se habilito exitosamente");
-        console.log("Registro Exitoso", "El turno se habilito exitosamente");
+        Alert.alert("Registro Exitoso", "El turno se habilito exitosamente");
+
         setEvents(await ListarMisTurnos());
       } else {
         setloading(false);
-        //Alert.alert("Registro Fallido", "El turno se guardo, vuelva a intentar");
-        console.log("Registro Fallido");
+        Alert.alert(
+          "Registro Fallido",
+          "El turno se guardo, vuelva a intentar"
+        );
+
         setEvents(await ListarMisTurnos());
       }
     } else {
-      setEvents(await ListarMisTurnos());
-      console.log("Es null");
+      setTurnos({
+        usuario: ObtenerUsuario().uid,
+        estado: true,
+        title: title,
+        start: date.toString(),
+        end: date.toString(),
+        fechacreacion: new Date().toString(),
+      });
       console.log(turnos);
     }
   };
@@ -85,25 +98,6 @@ export default function Turno() {
     await eliminarTurno("Turnos", e.id);
     setEvents(await ListarMisTurnos());
   };
-
-  // const guardarCambios = async () => {
-  //   if (turnos !== null) {
-  //     setloading(true);
-  //     const registrarFecha = await addRegistro("Turnos", turnos);
-  //     if (registrarFecha.statusreponse) {
-  //       setloading(false);
-  //       //Alert.alert("Registro Exitoso", "El turno se habilito exitosamente");
-  //       console.log("Registro Exitoso", "El turno se habilito exitosamente");
-  //     } else {
-  //       setloading(false);
-  //       //Alert.alert("Registro Fallido", "El turno se guardo, vuelva a intentar");
-  //       console.log("Registro Fallido");
-  //     }
-  //   } else {
-  //     console.log("Es null");
-  //     console.log(turnos);
-  //   }
-  // };
 
   function CabeceraBG(props) {
     const { nombre } = props;
@@ -129,47 +123,81 @@ export default function Turno() {
         }}
       >
         <Calendar
-          eventCellStyle={{ backgroundColor: "green" }}
+          eventCellStyle={(event) => {
+            const backgroundColor = event.estado ? "green" : "red";
+
+            return { backgroundColor };
+          }}
           events={events}
           height={500}
           startAccessor="start"
           endAccessor="end"
           onPressCell={(date) => AgregarTurno(date)}
-          onPressEvent={(e) => borrarTurno(e)}
+          onPressEvent={(e) =>
+            e.estado
+              ? Alert.alert(
+                  "Eliminar turno disponible",
+                  "¿Estás Seguro de que deseas eliminar el turno disponible?",
+                  [
+                    {
+                      style: "default",
+                      text: "Confirmar",
+                      onPress: async () => {
+                        borrarTurno(e);
 
-          // onPressEvent={(e) => {
-          //   Alert.alert(
-          //     "Eliminar Turno",
-          //     "¿Estás seguro que deseas eliminar el turno",
-          //     [
-          //       {
-          //         style: "default",
-          //         text: "Confirmar",
-          //         onPressEvent: async (e) => {
-          //           console.log(e.id);
-          //           setTurnos(await ListarMisTurnos());
-          //         },
-          //       },
-          //       {
-          //         style: "default",
-          //         text: "Salir",
-          //       },
-          //     ]
-          //   );
-          // }}
+                        setEvents(await ListarMisTurnos());
+                      },
+                    },
+                    {
+                      style: "default",
+                      text: "Cancelar",
+                    },
+                  ]
+                )
+              : Alert.alert(
+                  "Detalle del turno",
+                  "El turno está dado para el día " +
+                    e.start.getDate() +
+                    " a las " +
+                    e.start.getHours() +
+                    " hs " +
+                    " del mes " +
+                    mes[e.start.getMonth()],
+                  [
+                    {
+                      style: "cancel",
+                      text: "Entendido",
+                    },
+                  ]
+                )
+          }
         />
       </View>
-
-      {/* <Button
-        title="Actualizar Turnos"
-        buttonStyle={styles.btn_turnos}
-        onPress={actulizarTurnos}
-      /> */}
 
       <Button
         title="Borrar Todo"
         buttonStyle={styles.btn_borrar}
-        onPress={borrar_Turnos}
+        onPress={() =>
+          Alert.alert(
+            "Eliminar turnos disponibles",
+            "¿Estás seguro de que deseas eliminar todos los turnos disponibles?",
+            [
+              {
+                style: "default",
+                text: "Confirmar",
+                onPress: async () => {
+                  borrar_Turnos();
+
+                  setEvents(await ListarMisTurnos());
+                },
+              },
+              {
+                style: "default",
+                text: "Cancelar",
+              },
+            ]
+          )
+        }
       />
 
       <Loading isVisible={loading} text="Favor espere" />
