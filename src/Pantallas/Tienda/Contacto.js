@@ -3,30 +3,81 @@ import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 import { Avatar, Icon, Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import { actualizarRegistro, ObtenerUsuario } from "../../Utils/Acciones";
+import {
+  actualizarRegistro,
+  addRegistro,
+  obternerRegistroxID,
+  setMensajeNotificacion,
+  sendPushNotification,
+  ObtenerUsuario,
+} from "../../Utils/Acciones";
+import { size } from "lodash";
 import Loading from "../../Componentes/Loading";
 export default function Contacto(props) {
   const { route } = props;
-  const { displayName, phoneNumber, photoURL, email, mensaje, idTurno } =
-    route.params;
+  const {
+    displayName,
+    phoneNumber,
+    photoURL,
+    email,
+    mensaje,
+    idTurno,
+    id,
+    usuario,
+  } = route.params;
   const [estadoTurno, setEstadoTurno] = useState(false);
+  const [servicio, setservicio] = useState({});
   const [loading, setloading] = useState(false);
+  const [isVisible, setisvisible] = useState(false);
   const navigation = useNavigation();
+  const [mensaje2, setmensaje] = useState("");
+  const [expopushtoken, setexpopushtoken] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      setservicio((await obternerRegistroxID("Servicios", id)).data);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (size(servicio) > 0) {
+        const resultado = (
+          await obternerRegistroxID("Usuarios", servicio.usuario)
+        ).data;
+
+        setexpopushtoken(resultado.token);
+        setnombrevendedor(resultado.displayName);
+        setphotovendedor(resultado.photoURL);
+        setphonenumber(resultado.phoneNumber);
+        setEvents(await ListarSusTurnos(servicio.usuario));
+        console.log(events);
+      }
+    })();
+  }, [servicio]);
+
   const confirmarTurno = async () => {
     setEstadoTurno(false);
-
+    console.log("el id es: " + id);
     const turno = {
       estado: estadoTurno,
     };
 
-    const registrarproducto = await actualizarRegistro(
+    const registrarservicio = await actualizarRegistro(
       "Turnos",
       idTurno,
       turno
     );
 
-    if (registrarproducto.statusreponse) {
+    const actualizarNotificacion = async () =>
+      await actualizarRegistro("Notificaciones", id, {
+        visto: 1,
+      });
+
+    if (registrarservicio.statusreponse) {
       setloading(false);
+      actualizarNotificacion();
+      enviarConfirmacion();
       Alert.alert("Confirmación de turno", "El turno se ha confirmado.", [
         {
           style: "cancel",
@@ -50,7 +101,59 @@ export default function Contacto(props) {
     }
   };
 
-  const mensaje2 = `Hola, ${displayName}. Te escribo de ServiConsultas, para confirmar el turno. `;
+  const enviarConfirmacion = async () => {
+    const notificacion = {
+      sender: ObtenerUsuario().uid,
+      receiver: "El que recibe",
+      mensaje,
+      fechacreacion: new Date(),
+      //servicioid: servicio.id,
+      idTurno: idTurno,
+      //serviciotitulo: servicio.titulo,
+      visto: 0,
+    };
+
+    const resultado = await addRegistro("Notificaciones", notificacion);
+    if (resultado.statusreponse) {
+      const mensajenotificacion = setMensajeNotificacion(
+        expopushtoken,
+        `Turno confirmado `,
+        { data: "Prospecto Interesado" }
+      );
+
+      const respuesta = await sendPushNotification(mensajenotificacion);
+      setloading(false);
+      setisvisible(false);
+
+      if (respuesta) {
+        Alert.alert(
+          "Acción realizada correctamente",
+          `Se ha enviado la confirmación`,
+          [
+            {
+              style: "cancel",
+              text: "Entendido",
+              onPress: () => setisvisible(false),
+            },
+          ]
+        );
+        setmensaje("");
+      } else {
+        Alert.alert(
+          "Error",
+          "Se ha producido un error al enviar la confirmación, favor intentelo nuevamente  ",
+          [
+            {
+              style: "cancel",
+              text: "Entendido",
+            },
+          ]
+        );
+        setloading(false);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.panel}>

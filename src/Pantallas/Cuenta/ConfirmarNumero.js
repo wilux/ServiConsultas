@@ -1,7 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View, Image, Alert } from "react-native";
 import CodeInput from "react-native-code-input";
-import { useNavigation } from "@react-navigation/native";
 import Loading from "../../Componentes/Loading";
 import {
   confirmarcodigo,
@@ -9,7 +8,6 @@ import {
   ObtenerUsuario,
   addRegistroEspecifico,
 } from "../../Utils/Acciones";
-import { tipoUsuario } from "../../Componentes/RegisterForm";
 
 export default function ConfirmarNumero(props) {
   const { route } = props;

@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { Buscar } from "../Utils/Acciones";
 
 export default function Busqueda(props) {
   const {
-    setproductlist,
-    actualizarProductos,
+    setServicelist,
+    actualizarServicios,
     setsearch,
     search,
     setmensajes,
@@ -17,7 +16,7 @@ export default function Busqueda(props) {
     if (search) {
       (async () => {
         resultados = await Buscar(search);
-        setproductlist(resultados);
+        setServicelist(resultados);
         if (resultados.length === 0) {
           setmensajes("No se encontraron datos para la búsqueda " + search);
         }
@@ -44,8 +43,8 @@ export default function Busqueda(props) {
       value={search}
       onClear={() => {
         setsearch("");
-        setproductlist([]);
-        actualizarProductos();
+        setServicelist([]);
+        actualizarServicios();
       }}
     />
   );

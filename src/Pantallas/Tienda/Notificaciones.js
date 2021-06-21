@@ -8,14 +8,11 @@ import {
 } from "react-native";
 import { Avatar } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import {
-  ListarTodasNotificaciones,
-  actualizarRegistro,
-} from "../../Utils/Acciones";
+import { ListarNotificaciones, actualizarRegistro } from "../../Utils/Acciones";
 import moment from "moment/min/moment-with-locales";
 import { Button } from "react-native";
 
-export default function MensajesList() {
+export default function Notificaciones() {
   const [notificaciones, setnotificaciones] = useState(null);
   const [mensaje, setmensaje] = useState("Cargando..");
   const [usuario, setusuario] = useState("");
@@ -24,7 +21,7 @@ export default function MensajesList() {
   moment.locale("es");
   useEffect(() => {
     (async () => {
-      const consulta = await ListarTodasNotificaciones();
+      const consulta = await ListarNotificaciones();
       if (consulta.statusresponse) {
         setnotificaciones(consulta.data);
       } else {
@@ -64,14 +61,13 @@ function Notificacion(props) {
   const { mensaje, fechacreacion, sender, idTurno, serviciotitulo, id } =
     notificacion.item;
 
-  const { displayName, photoURL, phoneNumber, email, usuario } = sender;
+  const { displayName, photoURL, phoneNumber, email } = sender;
 
   return (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate("contacto", {
           displayName,
-          usuario,
           phoneNumber,
           photoURL,
           email,

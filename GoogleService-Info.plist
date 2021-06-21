@@ -15,11 +15,11 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.lvclick.whatscommerce</string>
+	<string>com.lvclick.serviconsultas</string>
 	<key>PROJECT_ID</key>
-	<string>whatscommerce-10f93</string>
+	<string>serviconsultas-56100</string>
 	<key>STORAGE_BUCKET</key>
-	<string>whatscommerce-10f93.appspot.com</string>
+	<string>serviconsultas-56100.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,6 +33,6 @@
 	<key>GOOGLE_APP_ID</key>
 	<string>1:674906515413:ios:4213498f5bacfa08df7f5c</string>
 	<key>DATABASE_URL</key>
-	<string>https://whatscommerce-10f93.firebaseio.com</string>
+	<string>https://serviconsultas-56100.firebaseio.com</string>
 </dict>
 </plist>

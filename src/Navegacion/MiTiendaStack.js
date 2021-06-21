@@ -2,8 +2,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import MiTienda from "../Pantallas/MiTienda/MiTienda";
-import EditarProducto from "../Pantallas/MiTienda/EditarProducto";
-import AddProduct from "../Pantallas/MiTienda/AddProduct";
+import EditarServicio from "../Pantallas/MiTienda/EditarServicio";
+import AddServicio from "../Pantallas/MiTienda/AddServicio";
 
 const Stack = createStackNavigator();
 
@@ -23,8 +23,8 @@ export default function MiTiendaStack() {
         }}
       />
       <Stack.Screen
-        component={AddProduct}
-        name="add-product"
+        component={AddServicio}
+        name="add-service"
         options={{
           title: "Agregar Nuevo Servicio",
           headerStyle: { backgroundColor: "#1b94ce" },
@@ -32,8 +32,8 @@ export default function MiTiendaStack() {
         }}
       />
       <Stack.Screen
-        component={EditarProducto}
-        name="edit-product"
+        component={EditarServicio}
+        name="edit-service"
         options={{
           title: "Editar Servicio",
         }}

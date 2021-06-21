@@ -1,9 +1,8 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-
 import Tienda from "../Pantallas/Tienda/Tienda";
 import Contacto from "../Pantallas/Tienda/Contacto";
-import MensajesList from "../Pantallas/Tienda/MensajesList";
+import Notificaciones from "../Pantallas/Tienda/Notificaciones";
 import Detalle from "../Pantallas/Tienda/Detalle";
 
 const Stack = createStackNavigator();
@@ -27,10 +26,10 @@ export default function TiendaStack() {
         }}
       />
       <Stack.Screen
-        component={MensajesList}
+        component={Notificaciones}
         name="mensajes"
         options={{
-          title: "Mensajes",
+          title: "Notificaciones",
           headerStyle: { backgroundColor: "#1b94ce" },
           headerTintColor: "#fff",
         }}

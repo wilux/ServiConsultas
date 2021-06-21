@@ -28,7 +28,7 @@ export default function Detalle(props) {
   const { route } = props;
   const { id, titulo } = route.params;
 
-  const [producto, setproducto] = useState({});
+  const [servicio, setservicio] = useState({});
   const [expopushtoken, setexpopushtoken] = useState("");
   const [nombrevendedor, setnombrevendedor] = useState("Nombre");
   const [photovendedor, setphotovendedor] = useState("");
@@ -55,25 +55,26 @@ export default function Detalle(props) {
 
   useEffect(() => {
     (async () => {
-      setproducto((await obternerRegistroxID("Productos", id)).data);
+      setservicio((await obternerRegistroxID("Servicios", id)).data);
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      if (size(producto) > 0) {
+      if (size(servicio) > 0) {
         const resultado = (
-          await obternerRegistroxID("Usuarios", producto.usuario)
+          await obternerRegistroxID("Usuarios", servicio.usuario)
         ).data;
 
         setexpopushtoken(resultado.token);
         setnombrevendedor(resultado.displayName);
         setphotovendedor(resultado.photoURL);
         setphonenumber(resultado.phoneNumber);
-        setEvents(await ListarSusTurnos(producto.usuario));
+        setEvents(await ListarSusTurnos(servicio.usuario));
+        console.log(events);
       }
     })();
-  }, [producto]);
+  }, [servicio]);
 
   function EnviarMensaje(props) {
     const {
@@ -86,7 +87,7 @@ export default function Detalle(props) {
       receiver,
       sender,
       token,
-      producto,
+      servicio,
       setloading,
       nombrecliente,
     } = props;
@@ -107,9 +108,9 @@ export default function Detalle(props) {
           receiver: receiver,
           mensaje,
           fechacreacion: new Date(),
-          productoid: producto.id,
+          servicioid: servicio.id,
           idTurno: idTurno,
-          productotitulo: producto.titulo,
+          serviciotitulo: servicio.titulo,
           visto: 0,
         };
 
@@ -117,7 +118,7 @@ export default function Detalle(props) {
         if (resultado.statusreponse) {
           const mensajenotificacion = setMensajeNotificacion(
             token,
-            `Cliente Interesado - ${producto.titulo}`,
+            `Cliente Interesado - ${servicio.titulo}`,
             `${nombrecliente}, te ha enviado una solicitud de turno`,
             { data: "Prospecto Interesado" }
           );
@@ -206,13 +207,13 @@ export default function Detalle(props) {
     );
   }
 
-  if (producto.lenght !== 0) {
+  if (servicio.lenght !== 0) {
     return (
       <ScrollView style={styles.container}>
         <StatusBar backgroundColor="#1b94ce" />
         {/* <Carousel
           data={null}
-          imagenes={producto.imagenes}
+          imagenes={servicio.imagenes}
           height={200}
           width={Dimensions.get("window").width}
           activeslide={activeslide}
@@ -233,14 +234,14 @@ export default function Detalle(props) {
           </View>
 
           <View style={styles.boxTop}>
-            <Text style={styles.titulos}>{producto.titulo}</Text>
+            <Text style={styles.titulos}>{servicio.titulo}</Text>
             <Text style={styles.precio}>
-              ${parseFloat(producto.precio).toFixed(2)}
+              ${parseFloat(servicio.precio).toFixed(2)}
             </Text>
 
             <View>
-              <Text style={styles.descripcion}>{producto.descripcion}</Text>
-              <Rating imageSize={20} startingValue={producto.rating} readonly />
+              <Text style={styles.descripcion}>{servicio.descripcion}</Text>
+              <Rating imageSize={20} startingValue={servicio.rating} readonly />
             </View>
           </View>
           <Text style={styles.subtitulo}>Disponibilidad del proveedor</Text>
@@ -293,10 +294,10 @@ export default function Detalle(props) {
             avatarvendedor={photovendedor}
             mensaje={mensaje}
             setmensaje={setmensaje}
-            receiver={producto.usuario}
+            receiver={servicio.usuario}
             sender={usuarioactual.uid}
             token={expopushtoken}
-            producto={producto}
+            servicio={servicio}
             setloading={setloading}
             nombrecliente={usuarioactual.displayName}
           />

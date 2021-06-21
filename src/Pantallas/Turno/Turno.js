@@ -51,6 +51,7 @@ export default function Turno() {
   };
 
   const AgregarTurno = async (date) => {
+    console.log(date.toUTCString());
     const title = "Turno de las " + date.getHours();
 
     if (Object.keys(turnos).length !== 0) {

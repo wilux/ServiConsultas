@@ -13,9 +13,9 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { size } from "lodash";
 import {
-  ListarProductos,
+  ListarServicios,
   ObtenerUsuario,
-  listarProductosxCategoria,
+  listarServiciosxCategoria,
   Buscar,
   ListarNotificaciones,
 } from "../../Utils/Acciones";
@@ -23,7 +23,7 @@ import Busqueda from "../../Componentes/Busqueda";
 
 export default function Tienda() {
   const navigation = useNavigation();
-  const [productlist, setproductlist] = useState([]);
+  const [servicelist, setservicelist] = useState([]);
   const [search, setsearch] = useState("");
   const [mensajes, setmensajes] = useState("Cargando...");
   const [notificaciones, setnotificaciones] = useState(0);
@@ -33,7 +33,7 @@ export default function Tienda() {
   useEffect(() => {
     (async () => {
       setnotificaciones(0);
-      setproductlist(await ListarProductos());
+      setservicelist(await ListarServicios());
 
       const consulta = await ListarNotificaciones();
       if (consulta.statusresponse) {
@@ -47,7 +47,7 @@ export default function Tienda() {
     useCallback(() => {
       (async () => {
         setnotificaciones(0);
-        setproductlist(await ListarProductos());
+        setservicelist(await ListarServicios());
         const consulta = await ListarNotificaciones();
         if (consulta.statusresponse) {
           setnotificaciones(size(consulta.data));
@@ -57,15 +57,15 @@ export default function Tienda() {
   );
 
   const cargarFiltroxCategoria = async (categoria) => {
-    const listaproductos = await listarProductosxCategoria(categoria);
-    setproductlist(listaproductos);
-    if (listaproductos.length === 0) {
+    const listaservicios = await listarServiciosxCategoria(categoria);
+    setservicelist(listaservicios);
+    if (listaservicios.length === 0) {
       setmensajes("No se encontraron datos para la categoría " + categoria);
     }
   };
 
-  const actualizarProductos = async () => {
-    setproductlist(await ListarProductos());
+  const actualizarServicios = async () => {
+    setservicelist(await ListarServicios());
   };
 
   return (
@@ -110,8 +110,8 @@ export default function Tienda() {
             </View>
           </View>
           <Busqueda
-            setproductlist={setproductlist}
-            actualizarProductos={actualizarProductos}
+            setservicelist={setservicelist}
+            actualizarServicios={actualizarServicios}
             setsearch={setsearch}
             search={search}
             setmensajes={setmensajes}
@@ -125,7 +125,7 @@ export default function Tienda() {
             <TouchableOpacity
               onPress={() => {
                 setcategoria("");
-                actualizarProductos();
+                actualizarServicios();
               }}
             >
               <Icon
@@ -174,11 +174,11 @@ export default function Tienda() {
         </View>
       </View>
 
-      {size(productlist) > 0 ? (
+      {size(servicelist) > 0 ? (
         <FlatList
-          data={productlist}
-          renderItem={(producto) => (
-            <Producto producto={producto} navigation={navigation} />
+          data={servicelist}
+          renderItem={(servicio) => (
+            <Servicio servicio={servicio} navigation={navigation} />
           )}
           keyExtractor={(item, index) => index.toString()}
         />
@@ -189,18 +189,11 @@ export default function Tienda() {
   );
 }
 
-function Producto(props) {
-  const { producto, navigation } = props;
+function Servicio(props) {
+  const { servicio, navigation } = props;
 
-  const {
-    titulo,
-    descripcion,
-    precio,
-    imagenes,
-    rating,
-    id,
-    usuario,
-  } = producto.item;
+  const { titulo, descripcion, precio, imagenes, rating, id, usuario } =
+    servicio.item;
 
   const { displayName, photoURL } = usuario;
 
@@ -211,7 +204,7 @@ function Producto(props) {
         navigation.navigate("detalle", { id, titulo });
       }}
     >
-      <Image source={{ uri: imagenes[0] }} style={styles.imgproducto} />
+      <Image source={{ uri: imagenes[0] }} style={styles.imgservicio} />
       <View style={styles.infobox}>
         <Text style={styles.titulo}>{titulo}</Text>
         <Text style={{ textAlign: "center" }}>
@@ -314,7 +307,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
   },
-  imgproducto: {
+  imgservicio: {
     width: 150,
     height: 200,
     borderRadius: 10,

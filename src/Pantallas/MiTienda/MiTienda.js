@@ -3,40 +3,35 @@ import { View, Text, StyleSheet, FlatList, Image, Alert } from "react-native";
 import { Icon } from "react-native-elements";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
-import {
-  ListarMisProductos,
-  actualizarRegistro,
-  eliminarProducto,
-} from "../../Utils/Acciones";
-import { concat } from "lodash";
+import { ListarMisServicios, eliminarServicio } from "../../Utils/Acciones";
 
 export default function MiTienda() {
   const navigation = useNavigation();
-  const [productos, setproductos] = useState({});
+  const [servicios, setservicios] = useState({});
 
   useEffect(() => {
     (async () => {
-      setproductos(await ListarMisProductos());
+      setservicios(await ListarMisServicios());
     })();
   }, []);
 
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        setproductos(await ListarMisProductos());
+        setservicios(await ListarMisServicios());
       })();
     }, [])
   );
 
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
-      {productos.length > 0 ? (
+      {servicios.length > 0 ? (
         <FlatList
-          data={productos}
+          data={servicios}
           renderItem={(item) => (
-            <Producto
-              producto={item}
-              setproductos={setproductos}
+            <Servicio
+              servicio={item}
+              setservicios={setservicios}
               navigation={navigation}
             />
           )}
@@ -69,7 +64,7 @@ export default function MiTienda() {
         color="#1b94ce"
         containerStyle={styles.btncontainer}
         onPress={() => {
-          navigation.navigate("add-product");
+          navigation.navigate("add-service");
         }}
         reverse
       />
@@ -77,9 +72,9 @@ export default function MiTienda() {
   );
 }
 
-function Producto(props) {
-  const { producto, setproductos, navigation } = props;
-  const { descripcion, precio, id, imagenes, titulo } = producto.item;
+function Servicio(props) {
+  const { servicio, setservicios, navigation } = props;
+  const { descripcion, precio, id, imagenes, titulo } = servicio.item;
 
   return (
     <View style={styles.container}>
@@ -96,37 +91,6 @@ function Producto(props) {
         </Text>
         <Text style={styles.precio}> $ {parseFloat(precio).toFixed(2)}</Text>
         <View style={styles.iconbar}>
-          {/* <View style={styles.icon}>
-            <Icon
-              type="material-community"
-              name="check-outline"
-              color="#25d366"
-              style={styles.icon}
-              onPress={() => {
-                Alert.alert(
-                  "Dar de alta el producto",
-                  "¿Estás Seguro de que deseas dar de alta el producto",
-                  [
-                    {
-                      style: "default",
-                      text: "Confirmar",
-                      onPress: async () => {
-                        await actualizarRegistro("Productos", id, {
-                          
-                        });
-
-                        setproductos(await ListarMisProductos());
-                      },
-                    },
-                    {
-                      style: "default",
-                      text: "Salir",
-                    },
-                  ]
-                );
-              }}
-            />
-          </View> */}
           <View style={styles.iconedit}>
             <Icon
               type="material-community"
@@ -134,7 +98,7 @@ function Producto(props) {
               color="#FFA000"
               style={styles.iconedit}
               onPress={() => {
-                navigation.navigate("edit-product", { id });
+                navigation.navigate("edit-service", { id });
               }}
             />
           </View>
@@ -146,15 +110,15 @@ function Producto(props) {
               style={styles.icondelete}
               onPress={async () => {
                 Alert.alert(
-                  "Eliminar Producto",
+                  "Eliminar Servicio",
                   "¿Estás seguro que deseas eliminar el servicio",
                   [
                     {
                       style: "default",
                       text: "Confirmar",
                       onPress: async () => {
-                        await eliminarProducto("Productos", id);
-                        setproductos(await ListarMisProductos());
+                        await eliminarServicio("Servicios", id);
+                        setservicios(await ListarMisServicios());
                       },
                     },
                     {

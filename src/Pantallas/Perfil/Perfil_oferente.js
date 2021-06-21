@@ -10,6 +10,7 @@ import {
   actualilzarPerfil,
   enviarconfirmacionphone,
   reautenticar,
+  cerrarsesion,
   actualizaremailfirebase,
 } from "../../Utils/Acciones";
 import Loading from "../../Componentes/Loading";
@@ -18,7 +19,7 @@ import Modal from "../../Componentes/Modal";
 import CodeInput from "react-native-code-input";
 import FirebaseRecapcha from "../../Utils/FirebaseRecapcha";
 
-export default function Perfil() {
+export default function Perfil_oferente() {
   const navigation = useNavigation();
   const [imagenperfil, setimagenperfil] = useState("");
   const [loading, setloading] = useState(false);
@@ -76,9 +77,9 @@ export default function Perfil() {
     }
   };
 
-  const guardarCambios = () => {
-    // addRegistroEspecifico("Usuarios", usuario.uid, { proveedor: checked });
-    console.log("Guardar ");
+  const Logout = () => {
+    cerrarsesion();
+    console.log("Salir ");
   };
 
   const actualizarValor = async (input, valor) => {
@@ -135,22 +136,6 @@ export default function Perfil() {
       setisVisible(false);
     }
   };
-
-  const events = [
-    {
-      title: "Meeting",
-      start: new Date(2021, 5, 25, 10, 0),
-      end: new Date(2021, 5, 25, 10, 30),
-      allDay: "false",
-    },
-    {
-      title: "Coffee break",
-      start: new Date(2021, 5, 25, 15, 45),
-      end: new Date(2021, 5, 25, 16, 30),
-      allDay: "false",
-    },
-  ];
-
   return (
     <View>
       <StatusBar backgroundColor="#1b94ce" />
@@ -178,7 +163,6 @@ export default function Perfil() {
         seteditablephone={seteditablephone}
         seteditablename={seteditablename}
         actualizarValor={actualizarValor}
-        guardarCambios={guardarCambios}
       />
       <Text style={styles.label}>Mi disponibilidad</Text>
       <Button
@@ -190,9 +174,9 @@ export default function Perfil() {
       />
 
       <Button
-        title="Guardar"
+        title="Cerrar Sesión"
         buttonStyle={styles.btn_guardar}
-        onPress={() => guardarCambios()}
+        onPress={() => Logout()}
       />
 
       <ModalVerification
@@ -384,11 +368,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
-  calendario: {
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
-  },
   btn_turnos: {
     marginTop: 30,
     marginBottom: 30,
@@ -400,7 +379,7 @@ const styles = StyleSheet.create({
   btn_guardar: {
     marginBottom: 10,
     width: 230,
-    //backgroundColor: "green",
+    backgroundColor: "red",
     borderRadius: 10,
     alignSelf: "center",
   },

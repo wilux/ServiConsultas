@@ -1,10 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
 import ConfirmarNumero from "../Pantallas/Cuenta/ConfirmarNumero";
 import EnviarConfirmacion from "../Pantallas/Cuenta/EnviarConfirmacion";
-import Login from "../Pantallas/Cuenta/Login";
+import Registrar from "../Pantallas/Cuenta/Registrar";
 
 const Stack = createStackNavigator();
 
@@ -30,15 +29,7 @@ export default function CuentaStack() {
             headerTintColor: "#fff",
           }}
         />
-        <Stack.Screen
-          component={Login}
-          name="login"
-          options={{
-            title: "Volver",
-            headerStyle: { backgroundColor: "#1b94ce" },
-            headerTintColor: "#fff",
-          }}
-        />
+        <Stack.Screen component={Registrar} name="register" />
       </Stack.Navigator>
     </NavigationContainer>
   );

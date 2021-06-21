@@ -111,47 +111,32 @@ export const ObtenerUsuario = () => {
 };
 
 export const ListarMiPerfil = async () => {
-  let perfiles = [];
-
-  await db
-    .collection("Usuarios")
-    .where("usuario", "==", ObtenerUsuario().uid)
-    // .where("status", "==", 0)
-    .get()
-    .then((response) => {
-      response.forEach((doc) => {
-        const perfil = doc.data();
-        perfil.id = doc.id;
-        perfiles.push(perfil);
-      });
-    })
-    .catch((err) => {
-      console.log("error");
-    });
-
-  return perfiles;
+  const usuario = db.collection("Usuarios").doc(ObtenerUsuario().uid);
+  const datos = await usuario.get();
+  const perfil = datos.data().proveedor;
+  return perfil;
 };
 
-export const ListarMisProductos = async () => {
-  let productos = [];
+export const ListarMisServicios = async () => {
+  let servicios = [];
 
   await db
-    .collection("Productos")
+    .collection("Servicios")
     .where("usuario", "==", ObtenerUsuario().uid)
     // .where("status", "==", 0)
     .get()
     .then((response) => {
       response.forEach((doc) => {
-        const producto = doc.data();
-        producto.id = doc.id;
-        productos.push(producto);
+        const servicio = doc.data();
+        servicio.id = doc.id;
+        servicios.push(servicio);
       });
     })
     .catch((err) => {
       console.log("error");
     });
 
-  return productos;
+  return servicios;
 };
 
 export const ListarMisTurnos = async () => {
@@ -220,8 +205,6 @@ export const ListarSusTurnos = async (proveedor) => {
 
     turnosFormat.push(myNewArray);
   }
-
-  //console.log(turnosFormat);
 
   return turnosFormat;
 };
@@ -338,7 +321,7 @@ export const actualizarRegistro = async (coleccion, documento, data) => {
   return response;
 };
 
-export const eliminarProducto = async (coleccion, documento) => {
+export const eliminarServicio = async (coleccion, documento) => {
   let response = { statusresponse: false };
 
   await db
@@ -398,10 +381,10 @@ export const obternerRegistroxID = async (coleccion, documento) => {
     .doc(documento)
     .get()
     .then((result) => {
-      const producto = result.data();
-      producto.id = result.id;
+      const servicio = result.data();
+      servicio.id = result.id;
 
-      response.data = producto;
+      response.data = servicio;
       response.statusresponse = true;
     })
     .catch((err) => {
@@ -411,69 +394,69 @@ export const obternerRegistroxID = async (coleccion, documento) => {
   return response;
 };
 
-export const ListarProductos = async () => {
-  const productoslist = [];
+export const ListarServicios = async () => {
+  const servicioslist = [];
   let index = 0;
 
   await db
-    .collection("Productos")
+    .collection("Servicios")
     .where("status", "==", 1)
     .get()
     .then((response) => {
       response.forEach((doc) => {
-        const producto = doc.data();
-        producto.id = doc.id;
-        productoslist.push(producto);
+        const servicio = doc.data();
+        servicio.id = doc.id;
+        servicioslist.push(servicio);
       });
     })
     .catch((err) => console.log(err));
 
-  for (const registro of productoslist) {
+  for (const registro of servicioslist) {
     const usuario = await obternerRegistroxID("Usuarios", registro.usuario);
-    productoslist[index].usuario = usuario.data;
+    servicioslist[index].usuario = usuario.data;
     index++;
   }
 
-  return productoslist;
+  return servicioslist;
 };
 
-export const listarProductosxCategoria = async (categoria) => {
-  const productoslist = [];
+export const listarServiciosxCategoria = async (categoria) => {
+  const servicioslist = [];
   let index = 0;
 
   await db
-    .collection("Productos")
+    .collection("Servicios")
     .where("status", "==", 1)
     .where("categoria", "==", categoria)
     .get()
     .then((response) => {
       response.forEach((doc) => {
-        const producto = doc.data();
-        producto.id = doc.id;
-        productoslist.push(producto);
+        const servicio = doc.data();
+        servicio.id = doc.id;
+        servicioslist.push(servicio);
       });
     })
     .catch((err) => console.log(err));
 
-  for (const registro of productoslist) {
+  for (const registro of servicioslist) {
     const usuario = await obternerRegistroxID("Usuarios", registro.usuario);
-    productoslist[index].usuario = usuario.data;
+    servicioslist[index].usuario = usuario.data;
     index++;
   }
 
-  return productoslist;
+  return servicioslist;
 };
 
 export const Buscar = async (search) => {
-  let productos = [];
+  let servicios = [];
 
   await fireSQL
-    .query(`SELECT * FROM Productos WHERE titulo LIKE '${search}%' `)
+    .query(`SELECT * FROM Servicios WHERE titulo LIKE '${search}%' `)
     .then((response) => {
-      productos = response;
+      servicios = response;
     });
 
-  return productos;
+  return servicios;
 };
 
 export const iniciarnotificaciones = (
@@ -535,6 +518,36 @@ export const ListarNotificaciones = async () => {
     .collection("Notificaciones")
     .where("receiver", "==", ObtenerUsuario().uid)
     .where("visto", "==", 0)
+    .get()
+    .then((response) => {
+      let datos;
+
+      response.forEach((doc) => {
+        datos = doc.data();
+        datos.id = doc.id;
+        respuesta.data.push(datos);
+      });
+      respuesta.statusresponse = true;
+    });
+
+  for (const notificacion of respuesta.data) {
+    const usuario = await obternerRegistroxID("Usuarios", notificacion.sender);
+    respuesta.data[index].sender = usuario.data;
+    index++;
+  }
+
+  return respuesta;
+};
+
+export const ListarTodasNotificaciones = async () => {
+  let respuesta = { statusresponse: false, data: [] };
+
+  let index = 0;
+
+  await db
+    .collection("Notificaciones")
+    .where("receiver", "==", ObtenerUsuario().uid)
+    //.where("visto", "==", 0)
     .get()
     .then((response) => {
       let datos;

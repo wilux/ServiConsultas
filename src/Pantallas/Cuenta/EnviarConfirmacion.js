@@ -22,13 +22,13 @@ export default function EnviarConfirmacion() {
   const enviarconfirmacion = async () => {
     if (!isEmpty(phone)) {
       const numero = `+${callingCode}${phone}`;
-      console.log(numero);
+      // console.log(numero);
       const verificationid = await enviarconfirmacionphone(
         numero,
         recaptchaVerifier
       );
 
-      console.log(verificationid);
+      //console.log(verificationid);
       if (!isEmpty(verificationid)) {
         navigation.navigate("confirmar-movil", { verificationid });
       } else {
@@ -66,12 +66,12 @@ export default function EnviarConfirmacion() {
         />
         <View style={styles.panelinterno}>
           <Icon
-            name="whatsapp"
+            name="phone"
             type="material-community"
             size={100}
             color="#25D366"
           />
-          <Text style={styles.titulo}>Favor ingresa tu número de Whatsapp</Text>
+          <Text style={styles.titulo}>Favor ingresa tu número de teléfono</Text>
           <View style={styles.viewtelefono}>
             <CountryPicker
               withFlag
@@ -86,7 +86,7 @@ export default function EnviarConfirmacion() {
             />
             <Text style={{ color: "#fff" }}> | </Text>
             <TextInput
-              placeholder="Número de Whatsapp"
+              placeholder="Número de Teléfono"
               style={styles.input}
               placeholderTextColor="#fff"
               onChangeText={(text) => setphone(text)}
@@ -101,12 +101,12 @@ export default function EnviarConfirmacion() {
             containerStyle={{ marginVertical: 20 }}
             onPress={() => enviarconfirmacion()}
           />
-          <Button
+          {/* <Button
             title="Volver"
             buttonStyle={{ backgroundColor: "#25d366", marginHorizontal: 20 }}
             containerStyle={{ marginVertical: 20 }}
-            onPress={() => navigation.goBack()}
-          />
+            onPress={() => navigation.navigate("register")}
+          /> */}
         </View>
       </View>
       <FirebaseRecapcha referencia={recaptchaVerifier} />

@@ -22,23 +22,40 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { cargarImagenesxAspecto } from "../../Utils/Utils";
 import {
   subirImagenesBatch,
-  addRegistro,
+  actualizarRegistro,
   ObtenerUsuario,
+  obternerRegistroxID,
 } from "../../Utils/Acciones";
 
-export default function AddProduct() {
+export default function EditarServicio(props) {
+  const { route } = props;
+  const { id } = route.params;
   const [titulo, settitulo] = useState("");
   const [descripcion, setdescripcion] = useState("");
   const [precio, setprecio] = useState(0.0);
   const [imagenes, setimagenes] = useState([]);
   const [categoria, setcategoria] = useState("");
-  const [rating, setrating] = useState(5);
+  const [rating, setrating] = useState(0);
   const [errores, seterrores] = useState({});
   const [loading, setloading] = useState(false);
   const btnref = useRef();
   const navigation = useNavigation();
 
-  const addProducto = async () => {
+  useEffect(() => {
+    (async () => {
+      const response = await obternerRegistroxID("Servicios", id);
+      console.log(response);
+      const { data } = response;
+      settitulo(data.titulo);
+      setdescripcion(data.descripcion);
+      setprecio(data.precio);
+      setimagenes(data.imagenes);
+      setrating(data.rating);
+      setcategoria(data.categoria);
+    })();
+  }, []);
+
+  const editServicio = async () => {
     seterrores({});
     if (isEmpty(titulo)) {
       seterrores({ titulo: "El campo título es obligatorio" });
@@ -72,9 +89,9 @@ export default function AddProduct() {
       setloading(true);
       const urlimagenes = await subirImagenesBatch(
         imagenes,
-        "ImagenesProductos"
+        "ImagenesServicios"
       );
-      const producto = {
+      const servicio = {
         titulo,
         descripcion,
         precio,
@@ -86,13 +103,17 @@ export default function AddProduct() {
         categoria,
       };
 
-      const registrarproducto = await addRegistro("Productos", producto);
+      const registrarservicio = await actualizarRegistro(
+        "Servicios",
+        id,
+        servicio
+      );
 
-      if (registrarproducto.statusreponse) {
+      if (registrarservicio.statusreponse) {
         setloading(false);
         Alert.alert(
-          "Registro Exitoso",
-          "El Servicio se ha registrado correctamente",
+          "Actualización completa",
+          "El servicio se ha actualizado correctamente",
           [
             {
               style: "cancel",
@@ -105,8 +126,8 @@ export default function AddProduct() {
         setloading(false);
 
         Alert.alert(
-          "Registro Fallido",
-          "Ha ocurrido un error al registrar el servicio",
+          "Actualización Fallida",
+          "Ha ocurrido un error al actualizar servicio",
           [
             {
               style: "cancel",
@@ -134,6 +155,7 @@ export default function AddProduct() {
         onChangeText={(text) => settitulo(text)}
         inputStyle={styles.input}
         errorMessage={errores.titulo}
+        value={titulo}
       />
       <Input
         placeholder="Descripcion"
@@ -141,6 +163,7 @@ export default function AddProduct() {
         inputStyle={styles.textarea}
         errorMessage={errores.descripcion}
         multiline={true}
+        value={descripcion}
       />
       <Input
         placeholder="Precio"
@@ -148,9 +171,10 @@ export default function AddProduct() {
         inputStyle={styles.input}
         errorMessage={errores.precio}
         keyboardType="name-phone-pad"
+        value={precio.toFixed(2)}
       />
 
-      {/* <Text style={styles.txtlabel}>Calidad del Producto o Servicio</Text>
+      {/* <Text style={styles.txtlabel}>Calidad del Servicio o Servicio</Text>
       <AirbnbRating
         count={5}
         reviews={["Baja", "Deficiente", "Normal", "Muy Bueno", "Excelente"]}
@@ -165,10 +189,10 @@ export default function AddProduct() {
       <Text style={styles.txtlabel}>Asignar Categoria</Text>
       <Botonera categoria={categoria} setcategoria={setcategoria} />
       <Button
-        title="Agregar Nuevo Servicio"
+        title="Editar Servicio"
         buttonStyle={styles.btnaddnew}
         ref={btnref}
-        onPress={addProducto}
+        onPress={editServicio}
       />
       <Loading isVisible={loading} text="Favor espere" />
     </KeyboardAwareScrollView>
@@ -270,7 +294,7 @@ function Botonera(props) {
       <TouchableOpacity
         style={styles.btncategoria}
         onPress={() => {
-          setcategoria("plomeria");
+          setcategoria("herreria");
         }}
       >
         <Icon
@@ -280,12 +304,12 @@ function Botonera(props) {
           color={categoria === "plomeria" ? "#1b94ce" : "#757575"}
           reverse
         />
-        <Text>Plomería</Text>
+        <Text>Fontanería</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btncategoria}
         onPress={() => {
-          setcategoria("electricista");
+          setcategoria("plomeria");
         }}
       >
         <Icon
@@ -295,7 +319,7 @@ function Botonera(props) {
           color={categoria === "electricista" ? "#1b94ce" : "#757575"}
           reverse
         />
-        <Text>Electricidad</Text>
+        <Text>Electricistas</Text>
       </TouchableOpacity>
     </View>
   );
