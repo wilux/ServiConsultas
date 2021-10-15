@@ -1,0 +1,44 @@
+# App ServiConsultas Demo
+# Instrucciones para correr Demo basadas en un entorno con Windows 10.
+
+# Dependencias necesarias: (Saltar si ya cuenta con ellas)	
+
+1.- Instalar Node.js --> https://nodejs.org/es/ 
+2.- Instalar NPM --> https://www.npmjs.com/get-npm (En Windows se instala automáticamente con Node)
+
+# Los siguiente debe hacerlo desde una consola/terminal 
+
+# Instalar Yarn (Saltar si ya lo tiene)
+
+3.- npm install --global yarn
+
+# Instalar Expo (Saltar si ya lo tiene)	 
+
+4.- yarn global add expo-cli
+
+# Instalar dependencias del proyecto 
+(Debe hacerlo dentro del directorio raíz del proyecto)
+
+
+5.- yarn install
+
+# Correr app
+
+6.- yarn start
+
+# Instalar App Expo en Celular donde se realizará la prueba (Buscar en store del propio celular)
+
+Escanear con la Cámara del celular para prueba el código QR que sale en terminal. 
+Esto abrirá la aplicación demo. 
+
+7.- Pruebas
+
+# Usuarios de Prueba
+
+*Fabian Plomero
+-usuario: nestorchoele@gmail.com
+-password: test1234
+
+*Anibal Carpintero
+-usuario: wilux2k@yahoo.com.ar
+-password: test1234

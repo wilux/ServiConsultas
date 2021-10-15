@@ -1,0 +1,7 @@
+*Proveedor
+-usuario: nestorchoele@gmail.com
+-password: test1234
+
+*Usuario
+-usuario: wilux2k@yahoo.com.ar
+-password: test1234
