@@ -191,6 +191,12 @@ export default function Detalle(props) {
             value={"Turno: " + "\n" + mensaje}
           />
           <Button
+            title="Realizar Pago"
+            buttonStyle={styles.btnsend}
+            containerStyle={{ width: "90%" }}
+            onPress={enviarNotificacion}
+          />
+          <Button
             title="Enviar solicitud"
             buttonStyle={styles.btnsend}
             containerStyle={{ width: "90%" }}
@@ -391,6 +397,7 @@ const styles = StyleSheet.create({
   },
   btnsend: {
     backgroundColor: "#075e54",
+    marginTop: 20,
   },
   btncerrar: {
     marginTop: 20,

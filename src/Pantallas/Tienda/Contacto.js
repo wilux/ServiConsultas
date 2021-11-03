@@ -162,6 +162,10 @@ export default function Contacto(props) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.pago}>
+        <Text style={styles.text}>Pago recibido por $400</Text>
+      </View>
+
       <View style={styles.panel}>
         <Avatar
           size="large"
@@ -216,6 +220,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "System",
     color: "#fff",
+  },
+  pago: {
+    backgroundColor: "blue",
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 10,
+    padding: 20,
+    borderRadius: 20,
   },
   rowicon: {
     flexDirection: "row",

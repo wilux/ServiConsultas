@@ -167,9 +167,16 @@ export default function Perfil_oferente() {
       <Text style={styles.label}>Mi disponibilidad</Text>
       <Button
         buttonStyle={styles.btn_turnos}
-        title="Gestionar turnos"
+        title="Gestionar Turnos"
         onPress={() => {
           navigation.navigate("turno");
+        }}
+      />
+      <Button
+        buttonStyle={styles.btn_turnos}
+        title="Gestionar Pagos $$$"
+        onPress={() => {
+          navigation.navigate("pago");
         }}
       />
 
@@ -369,14 +376,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   btn_turnos: {
-    marginTop: 30,
-    marginBottom: 30,
+    marginTop: 10,
+    marginBottom: 10,
     width: 230,
     backgroundColor: "green",
     borderRadius: 10,
     alignSelf: "center",
   },
   btn_guardar: {
+    marginTop: 10,
     marginBottom: 10,
     width: 230,
     backgroundColor: "red",

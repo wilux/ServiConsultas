@@ -185,7 +185,7 @@ export const ListarSusTurnos = async (proveedor) => {
   await db
     .collection("Turnos")
     .where("usuario", "==", proveedor)
-    .where("estado", "==", true)
+    //.where("estado", "==", true)
     .get()
     .then((response) => {
       response.forEach((doc) => {

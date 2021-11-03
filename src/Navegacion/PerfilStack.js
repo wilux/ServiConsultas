@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Perfil_oferente from "../Pantallas/Perfil/Perfil_oferente";
 import Perfil_demandante from "../Pantallas/Perfil/Perfil_demandante";
 import Turno from "../Pantallas/Turno/Turno";
+import Pagos from "../Pantallas/Tienda/Pagos";
 import { ListarMiPerfil, ObtenerUsuario } from "../Utils/Acciones";
 const Stack = createStackNavigator();
 
@@ -25,6 +26,11 @@ export default function PerfilStack() {
       <Stack.Screen
         component={Turno}
         name="turno"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        component={Pagos}
+        name="pago"
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

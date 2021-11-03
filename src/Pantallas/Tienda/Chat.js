@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   sala: {
-    height: 500,
+    height: 400,
     width: 380,
     margin: 12,
     borderWidth: 1,
